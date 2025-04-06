@@ -2,6 +2,7 @@
     import {loadTracksByArtist, tracksStore} from "../stores/tracks.js";
     import {artistsURL, currentArtist, currentArtistInfo, getArtistInfo} from "../stores/artists.js";
     import {onMount} from "svelte";
+    import {secondsToHumanString} from "../utils.js";
 
     onMount(async function() {
         currentArtistInfo.set(await getArtistInfo($currentArtist));
@@ -15,7 +16,7 @@
             <img src="{artistsURL}cover/{$currentArtist}/" alt="cover">
             <div>
                 <h1>{$currentArtistInfo.name}</h1>
-                <h2>Tracks: {$currentArtistInfo.tracks_count}  •  Duration: {$currentArtistInfo.duration}</h2>
+                <h2>{$currentArtistInfo.tracks_count} Tracks • {secondsToHumanString($currentArtistInfo.duration)}</h2>
             </div>
         </div>
     {/if}
