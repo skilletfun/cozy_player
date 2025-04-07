@@ -7,7 +7,7 @@ export function secondsToHumanString(value) {
 
     const hours = Math.floor(value / 3600);
     if (hours) {
-        result = hours + ' hour ' + numberEnding(hours);
+        result = hours + ' hour' + numberEnding(hours) + ' ';
     }
     const minutes = Math.floor((value % 3600) / 60);
     if (minutes) {
