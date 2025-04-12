@@ -42,8 +42,8 @@ a {
   color: inherit;
 }
 a:hover {
-  color: chartreuse !important;
   cursor: pointer;
+  color: chartreuse !important;
 }
 a:visited {
   text-decoration: none;

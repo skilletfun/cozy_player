@@ -1,5 +1,5 @@
 <script>
-    import ArtistCard from "$lib/ArtistCard.svelte";
+    import ArtistCard from "$lib/components/ArtistCard.svelte";
     let { data } = $props();
 </script>
 

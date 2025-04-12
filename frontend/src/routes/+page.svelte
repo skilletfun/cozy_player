@@ -1,11 +1,13 @@
 <script>
-    import {rescanLibrary} from "$stores/library.js";
-
     function play() {
         const player = document.getElementById("player");
         player.src = "song.mp3";
 	    player.load();
         player.play();
+    }
+
+    function rescanLibrary() {
+
     }
 </script>
 

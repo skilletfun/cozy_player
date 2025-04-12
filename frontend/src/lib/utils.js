@@ -3,7 +3,7 @@ export function secondsToHumanString(value) {
         return (number > 1) ? 's' : '';
     }
 
-    var result = "";
+    let result = "";
 
     const hours = Math.floor(value / 3600);
     if (hours) {

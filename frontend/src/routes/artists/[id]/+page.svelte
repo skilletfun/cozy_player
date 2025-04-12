@@ -1,6 +1,6 @@
 <script>
     import { secondsToHumanString } from "$lib/utils.js";
-    import TrackItem from "$lib/TrackItem.svelte";
+    import TrackItem from "$lib/components/TrackItem.svelte";
     import {API} from "$lib/api.js";
     let { data } = $props();
 </script>
