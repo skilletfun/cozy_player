@@ -1,18 +1,11 @@
 <script>
-  import { currentRoute } from "../router.js";
-  import {artistsURL, currentArtist} from "../stores/artists.js";
-
+  import {API} from "$lib/api.js";
   let {artist} = $props();
-
-  function openArtistView() {
-    currentArtist.set(artist.id);
-    currentRoute.set("ArtistView");
-  }
 </script>
 
 <div>
-  <img src="{artistsURL}cover/{artist.id}/" alt="cover">
-  <a onclick="{() => openArtistView()}">{artist.name}</a>
+  <img src="{API.ArtistCover}/{artist.id}/" alt="cover">
+  <a href="/artists/{artist.id}">{artist.name}</a>
 </div>
 
 <style>
