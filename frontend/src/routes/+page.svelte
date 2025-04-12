@@ -1,11 +1,18 @@
 <script>
-    import {rescanLibrary} from "../stores/library.js";
+    import {rescanLibrary} from "$stores/library.js";
+
+    function play() {
+        const player = document.getElementById("player");
+        player.src = "song.mp3";
+	    player.load();
+        player.play();
+    }
 </script>
 
 <div class="container">
     <div class="buttons">
         <button onclick={() => rescanLibrary()}>Rescan Library</button>
-        <button>Play</button>
+        <button onclick="{() => play()}">Play</button>
     </div>
     <p>Home</p>
 </div>
@@ -31,7 +38,6 @@
         margin-inline: 15px;
     }
     button:hover {
-        font-size: 16.5pt;
         background-color: #3c3c3c;
     }
     .buttons {

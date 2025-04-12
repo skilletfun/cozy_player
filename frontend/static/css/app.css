@@ -28,30 +28,24 @@ p {
 
 button {
   font-family: monospace;
+  cursor: pointer;
+}
+button:hover {
+  color: chartreuse;
 }
 
 a {
   font-family: monospace;
   margin-top: 10px;
   margin-bottom: 10px;
-
+  text-decoration: none;
+  color: inherit;
 }
 a:hover {
-  color: chartreuse;
+  color: chartreuse !important;
   cursor: pointer;
 }
-
-
-.card {
-  padding: 2em;
-}
-
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
+a:visited {
+  text-decoration: none;
+  color: inherit;
 }

@@ -1,12 +1,10 @@
 <script>
-    import {artistsStore, loadArtists} from "../stores/artists.js";
-    import ArtistCard from "./ArtistCard.svelte";
-
-    if (!$artistsStore.length) loadArtists();
+    import ArtistCard from "$lib/ArtistCard.svelte";
+    let { data } = $props();
 </script>
 
 <div>
-    {#each $artistsStore as artist }
+    {#each data.artists as artist }
         <ArtistCard artist={artist} />
     {/each}
 </div>

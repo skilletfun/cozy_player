@@ -1,32 +1,35 @@
 <script>
-  import {currentRoute} from "../router.js";
-  let {title, icon} = $props();
+  let {title, icon, href} = $props();
+  import { page } from '$app/state';
+
+  function isCurrentTab() {
+    return page.route && page.route.id === href;
+  }
 </script>
 
-<div onclick={() => currentRoute.set(title)} class="{$currentRoute == title ? 'active' : ''}">
+<a href="{href}" class="{isCurrentTab() ? 'active' : ''}">
   <i class="fal fa-{icon}"></i>
   <p>{title}</p>
-</div>
+</a>
 
 <style>
-  div {
+  a {
     height: 40px;
     margin-top: 5px;
     display: flex;
     align-items: center;
-    cursor: pointer;
     padding-right: 15px;
     padding-left: 15px;
     background-color: transparent;
     border-radius: 150px;
     transition: 0.3s;
   }
-  div.active {
+  a.active {
     color: chartreuse;
   }
 
-  div:hover {
-    background-color: #3c3c3c
+  a:hover {
+    background-color: #3c3c3c;
   }
 
   p {

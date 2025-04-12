@@ -1,6 +1,0 @@
-<script>
-</script>
-
-<div>
-    <h1>Playlists</h1>
-</div>
