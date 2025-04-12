@@ -1,6 +1,6 @@
 <script>
-  import {API} from "$lib/api.js";
-  let {artist} = $props();
+  import { API } from "$lib/api.js";
+  let { artist } = $props();
 </script>
 
 <div>

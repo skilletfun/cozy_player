@@ -1,7 +1,7 @@
 <script>
     import { secondsToHumanString } from "$lib/utils.js";
-    import TrackItem from "$lib/components/TrackItem.svelte";
-    import {API} from "$lib/api.js";
+    import { API } from "$lib/api.js";
+    import TrackList from "$lib/components/TrackList.svelte";
     let { data } = $props();
 </script>
 
@@ -15,11 +15,7 @@
             <button class="more"><i class="fas fa-ellipsis-h"></i></button>
         </div>
     </div>
-    <div style="overflow-y: scroll; height:550px;width: 100%">
-        {#each data.tracks as track, index}
-            <TrackItem index={index} track={track}/>
-        {/each}
-    </div>
+    <TrackList data={data.tracks} />
 </div>
 
 <style>

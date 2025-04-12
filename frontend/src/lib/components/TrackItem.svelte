@@ -1,5 +1,5 @@
 <script>
-    let {index, track} = $props();
+    let { index, track } = $props();
 </script>
 
 <div style="display: flex;margin-left: -10px;align-items: center">

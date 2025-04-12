@@ -1,6 +1,6 @@
 <script>
-  let {title, icon, href} = $props();
   import { page } from '$app/state';
+  let { title, icon, href } = $props();
 
   function isCurrentTab() {
     return page.route && page.route.id === href;
