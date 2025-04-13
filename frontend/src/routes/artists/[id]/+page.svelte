@@ -2,6 +2,7 @@
     import { secondsToHumanString } from "$lib/utils.js";
     import { API } from "$lib/api.js";
     import TrackList from "$lib/components/TrackList.svelte";
+    import {playArtist} from "$lib/player.js";
     let { data } = $props();
 </script>
 
@@ -11,8 +12,8 @@
         <div>
             <h1>{data.artist.name}</h1>
             <h2>{data.artist.tracks_count} Tracks • {secondsToHumanString(data.artist.duration)}</h2>
-            <button class="play-btn"><i class="fas fa-play"></i> Play</button>
-            <button class="more"><i class="fas fa-ellipsis-h"></i></button>
+            <button class="play-btn" onclick={() => playArtist(data.artist)}><i class="fas fa-play"></i> Play</button>
+            <button aria-label="play" class="more"><i class="fas fa-ellipsis-h"></i></button>
         </div>
     </div>
     <TrackList data={data.tracks} />

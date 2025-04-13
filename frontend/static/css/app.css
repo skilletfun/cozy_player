@@ -27,6 +27,7 @@ p {
 }
 
 button {
+  border-width: 0;
   font-family: monospace;
   cursor: pointer;
 }
