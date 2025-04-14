@@ -22,12 +22,8 @@ class Track(models.Model):
 
     @property
     def cover(self):
-        tags = music_tag.load_file(self.path)
-        cover = tags["artwork"].first
-        if cover is not None:
-            data = cover.data
-        elif cover := self._cover_in_folder():
-            pass
+        if (cover := music_tag.load_file(self.path)["artwork"].first) is not None:
+            return cover.raw
 
-        # если есть в тегах - отдаем, если нету, чекаем папку, затем чекаем исполнителя, затем отдаем дефолт
-        pass
+        path = self._cover_in_folder() or self.artist.cover
+        return open(path, "rb").read()

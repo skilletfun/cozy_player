@@ -1,4 +1,4 @@
-from django.http import FileResponse
+from django.http import FileResponse, HttpResponse
 from django.db.models import F
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.generics import ListAPIView, RetrieveAPIView
@@ -19,9 +19,8 @@ class TrackGetAPIView(RetrieveAPIView):
     queryset = Track.objects.all()
 
     def retrieve(self, request, *args, **kwargs):
-        track: Track = self.get_object()
         return FileResponse(
-            open(track.path, "rb"),
+            open(self.get_object().path, "rb"),
             headers={
                 "Access-Control-Allow-Origin": "*",
                 "Access-Control-Expose-Headers": "Content-Length, Content-Range",
@@ -34,8 +33,10 @@ class TrackCoverGetAPIView(RetrieveAPIView):
     queryset = Track.objects.all()
 
     def retrieve(self, request, *args, **kwargs):
-        track: Track = self.get_object()
-        return FileResponse(
-            track.cover,
-            headers={"Cache-Control": "public, max-age=604800, immutable"},
+        return HttpResponse(
+            self.get_object().cover,
+            headers={
+                "Cache-Control": "public, max-age=604800, immutable",
+                "Content-Type": "image",
+            },
         )
