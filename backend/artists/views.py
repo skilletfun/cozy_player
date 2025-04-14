@@ -23,4 +23,7 @@ class ArtistCoverGetAPIView(RetrieveAPIView):
 
     def retrieve(self, request, *args, **kwargs):
         artist: Artist = self.get_object()
-        return FileResponse(open(artist.cover, "rb"))
+        return FileResponse(
+            open(artist.cover, "rb"),
+            headers={"Cache-Control": "public, max-age=604800, immutable"},
+        )

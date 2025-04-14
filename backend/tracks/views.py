@@ -20,12 +20,22 @@ class TrackGetAPIView(RetrieveAPIView):
 
     def retrieve(self, request, *args, **kwargs):
         track: Track = self.get_object()
-        return FileResponse(open(track.path, "rb"))
+        return FileResponse(
+            open(track.path, "rb"),
+            headers={
+                "Access-Control-Allow-Origin": "*",
+                "Access-Control-Expose-Headers": "Content-Length, Content-Range",
+                "Accept-Ranges": "bytes",
+            },
+        )
 
 
-# class TrackCoverGetAPIView(RetrieveAPIView):
-#     queryset = Track.objects.all()
-#
-#     def retrieve(self, request, *args, **kwargs):
-#         track: Track = self.get_object()
-#         return FileResponse(open(artist.cover, "rb"))
+class TrackCoverGetAPIView(RetrieveAPIView):
+    queryset = Track.objects.all()
+
+    def retrieve(self, request, *args, **kwargs):
+        track: Track = self.get_object()
+        return FileResponse(
+            track.cover,
+            headers={"Cache-Control": "public, max-age=604800, immutable"},
+        )

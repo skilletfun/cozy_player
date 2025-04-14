@@ -1,6 +1,27 @@
 <script>
     import NavigationButton from "$lib/components/NavigationButton.svelte";
+    import { onMount } from "svelte";
+    import { pausePlaying, resumePlaying, nextTrack, previousTrack, seekTo } from "$lib/player.js";
     let { children } = $props();
+
+    onMount(() => {
+        if (!('mediaSession' in navigator)) return;
+
+        navigator.mediaSession.setActionHandler('play', resumePlaying);
+        navigator.mediaSession.setActionHandler('pause', pausePlaying);
+        navigator.mediaSession.setActionHandler('previoustrack', previousTrack);
+        navigator.mediaSession.setActionHandler('nexttrack', nextTrack);
+        navigator.mediaSession.setActionHandler('seekto', (details) => {
+            seekTo(details.seekTime);
+        });
+
+        return () => {
+          // Cleanup
+          if ('mediaSession' in navigator) {
+            navigator.mediaSession.metadata = null;
+          }
+        };
+    });
 </script>
 
 <main>
