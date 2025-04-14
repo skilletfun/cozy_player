@@ -7,7 +7,7 @@
 <div>
   <img src="{API.ArtistCover}/{artist.id}/" alt="cover">
   <button aria-label="play" class="play-btn" onclick={() => playArtist(artist)}><i class="fas fa-play"></i></button>
-  <a onclick={(e) => e.stopPropagation()} href="/artists/{artist.id}">{artist.name}</a>
+  <a href="/artists/{artist.id}">{artist.name}</a>
 </div>
 
 <style>

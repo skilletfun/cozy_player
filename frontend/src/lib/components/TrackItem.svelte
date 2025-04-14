@@ -1,5 +1,5 @@
 <script>
-    import {playTrack} from "$lib/player.js";
+    import { playTrack } from "$lib/player.js";
 
     let { index, track } = $props();
 </script>
