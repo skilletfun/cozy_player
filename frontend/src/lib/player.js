@@ -3,6 +3,20 @@ import {API} from "$lib/api.js";
 export let playQueue = [];
 export let currentTrackIndex = 0;
 
+export function setupPlayer() {
+    if (!('mediaSession' in navigator)) return;
+
+    document.getElementById("player").addEventListener("ended", onTrackEnds);
+
+    navigator.mediaSession.setActionHandler('play', resumePlaying);
+    navigator.mediaSession.setActionHandler('pause', pausePlaying);
+    navigator.mediaSession.setActionHandler('previoustrack', previousTrack);
+    navigator.mediaSession.setActionHandler('nexttrack', nextTrack);
+    navigator.mediaSession.setActionHandler('seekto', (details) => {
+        seekTo(details.seekTime);
+    });
+}
+
 export function play() {
     if (playQueue.length === 0) {
         return;
@@ -15,12 +29,33 @@ export function play() {
     player.load();
     player.play();
 
+    updateMediaSessionInfo(track);
+}
+
+export function updateMediaSessionInfo(track) {
     document.title = `${track.title} - ${track.artist_name}`;
     navigator.mediaSession.metadata = new MediaMetadata({
       title: track.title,
       artist: track.artist_name,
       artwork: [{src: `${API.Tracks}cover/${track.id}/`}]
     });
+    navigator.mediaSession.setPositionState({
+        duration: track.duration,
+        position: 0,
+    });
+}
+
+function onTrackEnds() {
+    const track = playQueue[currentTrackIndex];
+    fetch(
+    `${API.Tracks}${track.id}/`,
+    {
+            method: 'PATCH',
+            body: JSON.stringify({play_count: track.play_count + 1}),
+            headers: {"Content-Type": "application/json"},
+        },
+    );
+    nextTrack();
 }
 
 export function nextTrack() {

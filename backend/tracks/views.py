@@ -1,7 +1,7 @@
 from django.http import FileResponse, HttpResponse
 from django.db.models import F
 from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework.generics import ListAPIView, RetrieveAPIView
+from rest_framework.generics import ListAPIView, RetrieveAPIView, RetrieveUpdateAPIView
 
 from .models import Track
 from .serializers import TrackSerializer
@@ -15,8 +15,9 @@ class TrackListAPIView(ListAPIView):
     filterset_class = TrackFilter
 
 
-class TrackGetAPIView(RetrieveAPIView):
+class TrackGetUpdateAPIView(RetrieveUpdateAPIView):
     queryset = Track.objects.all()
+    serializer_class = TrackSerializer
 
     def retrieve(self, request, *args, **kwargs):
         return FileResponse(
