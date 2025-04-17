@@ -1,4 +1,5 @@
-import {API} from "$lib/api.js";
+import { API } from "$lib/api.js";
+import { current } from "$lib/shared.svelte.js";
 
 export let playQueue = [];
 export let currentTrackIndex = 0;
@@ -18,12 +19,11 @@ export function setupPlayer() {
 }
 
 export function play() {
-    if (playQueue.length === 0) {
-        return;
-    }
+    if (playQueue.length === 0) return;
 
     let player = document.getElementById("player");
     const track = playQueue[currentTrackIndex];
+    current.track = track;
 
     player.src = `${API.Tracks}${track.id}/`;
     player.load();
@@ -43,6 +43,7 @@ export function updateMediaSessionInfo(track) {
         duration: track.duration,
         position: 0,
     });
+    navigator.mediaSession.playbackState = "playing";
 }
 
 function onTrackEnds() {
