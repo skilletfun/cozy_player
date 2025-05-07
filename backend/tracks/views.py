@@ -15,6 +15,11 @@ class TrackListAPIView(ListAPIView):
     filterset_class = TrackFilter
 
 
+class TrackQueueAPIView(ListAPIView):
+    queryset = Track.objects.annotate(artist_name=F("artist__name"))
+    serializer_class = TrackSerializer
+
+
 class TrackGetUpdateAPIView(RetrieveUpdateAPIView):
     queryset = Track.objects.all()
     serializer_class = TrackSerializer

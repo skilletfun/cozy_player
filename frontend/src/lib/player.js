@@ -101,3 +101,10 @@ export async function playArtist(artist) {
     currentTrackIndex = 0;
     play();
 }
+
+export async function playMainQueue() {
+    const responseTracks = await fetch(API.Queue);
+    playQueue = await responseTracks.json();
+    currentTrackIndex = 0;
+    play();
+}

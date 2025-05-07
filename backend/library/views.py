@@ -3,7 +3,7 @@ import os
 
 import music_tag
 from django.conf import settings
-from django.db.models import Count
+from django.db.models import Count, Sum, F
 from rest_framework.views import APIView
 from rest_framework.response import Response
 
@@ -13,6 +13,22 @@ from tracks.models import Track
 
 
 logger = logging.getLogger(__name__)
+
+
+class StatisticAPIView(APIView):
+    def get(self, request):
+        tracks_duration = Track.objects.aggregate(Sum("duration"))["duration__sum"]
+        tracks_played = Track.objects.annotate(
+            played=F("duration") * F("play_count")
+        ).aggregate(Sum("played"))["played__sum"]
+        return Response(
+            {
+                "artists_total": Artist.objects.all().count(),
+                "tracks_total": Track.objects.all().count(),
+                "tracks_duration": tracks_duration,
+                "tracks_played": tracks_played,
+            }
+        )
 
 
 class RescanLibraryAPIView(APIView):

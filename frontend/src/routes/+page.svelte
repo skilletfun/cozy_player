@@ -1,48 +1,22 @@
 <script>
-    function play() {
-        const player = document.getElementById("player");
-        player.src = "song.mp3";
-	    player.load();
-        player.play();
-    }
-
-    function rescanLibrary() {
-
-    }
+    import StatisticCard from "$lib/components/StatisticCard.svelte";
+    import {secondsToHumanString} from "$lib/utils.js";
+    let { data } = $props();
 </script>
 
 <div class="container">
-    <div class="buttons">
-        <button onclick={() => rescanLibrary()}>Rescan Library</button>
-        <button onclick="{() => play()}">Play</button>
-    </div>
-    <p>Home</p>
+    <StatisticCard title="Artists" text={data.artists_total}/>
+    <StatisticCard title="Tracks" text={data.tracks_total}/>
+    <StatisticCard title="Total duration" text={secondsToHumanString(data.tracks_duration, true)}/>
+    <StatisticCard title="Total played" text={secondsToHumanString(data.tracks_played, true)}/>
 </div>
 
 <style>
     .container {
-        margin-top: 200px;
-        width: 100%;
+        margin-top: 100px;
+        margin-left: 250px;
+        flex-wrap: wrap;
         display: flex;
-        align-items: center;
-        justify-content: start;
-        flex-direction: column;
-    }
-    button {
-        width: 250px;
-        height: 75px;
-        font-size: 16pt;
-        background-color: transparent;
-        border: 2px solid rgb(75 70 74);
-        border-radius: 10px;
-        cursor: pointer;
-        transition: 0.1s;
-        margin-inline: 15px;
-    }
-    button:hover {
-        background-color: #3c3c3c;
-    }
-    .buttons {
-        margin-bottom: 100px;
+        flex-direction: row;
     }
 </style>

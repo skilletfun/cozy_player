@@ -5,5 +5,7 @@ export const API = {
     ArtistCover: `${API_URL}/artists/cover`,
     Library: `${API_URL}/library/`,
     LibraryRescan: `${API_URL}/library/rescan/`,
+    LibraryStats: `${API_URL}/library/stats/`,
     Tracks: `${API_URL}/tracks/`,
+    Queue: `${API_URL}/tracks/queue/`,
 }

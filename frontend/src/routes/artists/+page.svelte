@@ -12,8 +12,8 @@
 <style>
     div {
         display: grid;
-        margin-top: 50px;
-        margin-left: 200px;
-        grid-template-columns: auto auto auto auto auto auto;
+        margin-top: 20px;
+        margin-left: 150px;
+        grid-template-columns: auto auto auto auto auto auto auto auto;
     }
 </style>
