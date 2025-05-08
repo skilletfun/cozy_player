@@ -49,8 +49,8 @@ export function updateMediaSessionInfo(track) {
 function onTrackEnds() {
     const track = playQueue[currentTrackIndex];
     fetch(
-    `${API.Tracks}${track.id}/`,
-    {
+        `${API.Tracks}${track.id}/`,
+        {
             method: 'PATCH',
             body: JSON.stringify({play_count: track.play_count + 1}),
             headers: {"Content-Type": "application/json"},
