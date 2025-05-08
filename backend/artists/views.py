@@ -25,5 +25,5 @@ class ArtistCoverGetAPIView(RetrieveAPIView):
         artist: Artist = self.get_object()
         return FileResponse(
             open(artist.cover, "rb"),
-            headers={"Cache-Control": "public, max-age=604800, immutable"},
+            headers={"Cache-Control": "public, max-age=43200, immutable"},
         )

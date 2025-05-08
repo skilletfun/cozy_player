@@ -42,7 +42,7 @@ class TrackCoverGetAPIView(RetrieveAPIView):
         return HttpResponse(
             self.get_object().cover,
             headers={
-                "Cache-Control": "public, max-age=604800, immutable",
+                "Cache-Control": "public, max-age=43200, immutable",
                 "Content-Type": "image",
             },
         )
