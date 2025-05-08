@@ -2,6 +2,9 @@ from collections import defaultdict
 
 
 def shuffle_tracks(tracks: dict[int, list[dict]]) -> list[dict]:
+    """
+    Перемешивает треки таким образом, чтобы треки одного исполнителя не стояли рядом
+    """
     result: list[dict] = []
     order: list[int] = sorted(tracks.keys(), key=lambda x: len(tracks[x]), reverse=True)
 
@@ -20,6 +23,10 @@ def shuffle_tracks(tracks: dict[int, list[dict]]) -> list[dict]:
 
 
 def shuffle_queue(tracks: list[dict]) -> list[dict]:
+    """
+    Сортирует треки по количеству воспроизведений и исполнителю,
+    затем перемешивает каждый такой батч
+    """
     parts: dict[int, dict[int, list[dict]]] = defaultdict(lambda: defaultdict(list))
 
     for track in tracks:

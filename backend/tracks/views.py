@@ -4,6 +4,7 @@ from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.generics import ListAPIView, RetrieveAPIView, RetrieveUpdateAPIView
 from rest_framework.response import Response
 
+from common.headers import COVER_HEADERS, TRACK_HEADERS
 from .models import Track
 from .serializers import TrackSerializer
 from .filters import TrackFilter
@@ -11,6 +12,8 @@ from .utils import shuffle_queue
 
 
 class TrackListAPIView(ListAPIView):
+    """Отдает список треков"""
+
     queryset = Track.objects.annotate(artist_name=F("artist__name"))
     serializer_class = TrackSerializer
     filter_backends = (DjangoFilterBackend,)
@@ -18,6 +21,8 @@ class TrackListAPIView(ListAPIView):
 
 
 class TrackQueueAPIView(ListAPIView):
+    """Генерирует очередь воспроизведения"""
+
     queryset = Track.objects.annotate(artist_name=F("artist__name"))
     serializer_class = TrackSerializer
 
@@ -28,28 +33,19 @@ class TrackQueueAPIView(ListAPIView):
 
 
 class TrackGetUpdateAPIView(RetrieveUpdateAPIView):
+    """PATCH / PUT для обновления данных трека, GET для получения файла на воспроизведение"""
+
     queryset = Track.objects.all()
     serializer_class = TrackSerializer
 
     def retrieve(self, request, *args, **kwargs):
-        return FileResponse(
-            open(self.get_object().path, "rb"),
-            headers={
-                "Access-Control-Allow-Origin": "*",
-                "Access-Control-Expose-Headers": "Content-Length, Content-Range",
-                "Accept-Ranges": "bytes",
-            },
-        )
+        return FileResponse(open(self.get_object().path, "rb"), headers=TRACK_HEADERS)
 
 
 class TrackCoverGetAPIView(RetrieveAPIView):
+    """Отдает обложку для трека"""
+
     queryset = Track.objects.all()
 
     def retrieve(self, request, *args, **kwargs):
-        return HttpResponse(
-            self.get_object().cover,
-            headers={
-                "Cache-Control": "public, max-age=43200, immutable",
-                "Content-Type": "image",
-            },
-        )
+        return HttpResponse(self.get_object().cover, headers=COVER_HEADERS)

@@ -10,7 +10,7 @@ class Artist(models.Model):
     name = models.CharField()
 
     def __str__(self) -> str:
-        return self.name
+        return str(self.name)
 
     @property
     def path(self) -> str:

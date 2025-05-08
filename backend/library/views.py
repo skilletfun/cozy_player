@@ -1,5 +1,5 @@
-import logging
 import os
+import logging
 
 import music_tag
 from django.conf import settings
@@ -16,11 +16,14 @@ logger = logging.getLogger(__name__)
 
 
 class StatisticAPIView(APIView):
+    """Статистика для главной страницы"""
+
     def get(self, request):
         tracks_duration = Track.objects.aggregate(Sum("duration"))["duration__sum"]
         tracks_played = Track.objects.annotate(
             played=F("duration") * F("play_count")
         ).aggregate(Sum("played"))["played__sum"]
+        
         return Response(
             {
                 "artists_total": Artist.objects.all().count(),
@@ -32,6 +35,8 @@ class StatisticAPIView(APIView):
 
 
 class RescanLibraryAPIView(APIView):
+    """Сканирует библиотеку, добавляет новые треки / исполнителей, очищает невалидное"""
+
     def get(self, request):
         artists_qs = Artist.objects.all().prefetch_related("tracks")
         artists: dict[str, Artist] = {a.name: a for a in artists_qs}
