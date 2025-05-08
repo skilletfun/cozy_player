@@ -11,4 +11,5 @@ dependencies = [
     "django-cors-headers>=4.7.0",
     "django-filter>=25.1",
     "black>=25.1.0",
+    "pylint>=3.3.7",
 ]
