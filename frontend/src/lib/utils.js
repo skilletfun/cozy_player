@@ -16,4 +16,6 @@ export function secondsToHumanString(value, short = false) {
     if (minutes) {
         return result + minutes + minLabel + numberEnding(minutes);
     }
+
+    return '-';
 }
