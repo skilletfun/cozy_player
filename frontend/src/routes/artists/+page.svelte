@@ -12,8 +12,9 @@
 <style>
     div {
         display: grid;
+        width: 70%;
         margin-top: 20px;
-        margin-left: 150px;
-        grid-template-columns: auto auto auto auto auto auto auto auto;
+        margin-left: 125px;
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
     }
 </style>
