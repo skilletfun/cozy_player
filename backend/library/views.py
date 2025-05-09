@@ -20,10 +20,10 @@ class StatisticAPIView(APIView):
 
     def get(self, request):
         tracks_duration = Track.objects.aggregate(Sum("duration"))["duration__sum"]
-        tracks_played = Track.objects.annotate(
-            played=F("duration") * F("play_count")
-        ).aggregate(Sum("played"))["played__sum"]
-        
+        tracks_played = Track.objects.annotate(played=F("duration") * F("play_count")).aggregate(Sum("played"))[
+            "played__sum"
+        ]
+
         return Response(
             {
                 "artists_total": Artist.objects.all().count(),
@@ -40,9 +40,7 @@ class RescanLibraryAPIView(APIView):
     def get(self, request):
         artists_qs = Artist.objects.all().prefetch_related("tracks")
         artists: dict[str, Artist] = {a.name: a for a in artists_qs}
-        tracks: dict[Artist, dict[str, Track]] = {
-            a: {t.path: t for t in a.tracks.all()} for a in artists.values()
-        }
+        tracks: dict[Artist, dict[str, Track]] = {a: {t.path: t for t in a.tracks.all()} for a in artists.values()}
 
         logger.info(f"Rescaning music folder: {settings.MUSIC_FOLDER}")
         for artist_folder in os.listdir(settings.MUSIC_FOLDER):
@@ -89,8 +87,6 @@ class RescanLibraryAPIView(APIView):
             logger.info(f"Total new tracks for {artist.name}: {len(new_tracks)}")
             Track.objects.bulk_create(new_tracks)
 
-        Artist.objects.annotate(total_tracks=Count("tracks")).filter(
-            total_tracks=0
-        ).delete()
+        Artist.objects.annotate(total_tracks=Count("tracks")).filter(total_tracks=0).delete()
 
         return Response()

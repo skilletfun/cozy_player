@@ -20,8 +20,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 MUSIC_FOLDER: str = os.getenv("MUSIC_FOLDER", "/home/skilletfun/Music")
 TRACKS_EXTENSIONS: list[str] = ["mp3", "m4a"]
-DEFAULT_ARTIST_COVER: str = "static/artist.png"
-DEFAULT_TRACK_COVER: str = "static/track.png"
+DEFAULT_ARTIST_COVER: str = BASE_DIR / "static/artist.png"
+DEFAULT_TRACK_COVER: str = BASE_DIR / "static/track.png"
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
