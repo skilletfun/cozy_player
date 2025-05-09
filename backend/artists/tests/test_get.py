@@ -12,18 +12,18 @@ from artists.models import Artist
 class ArtistGetTestCase(TestCase):
     @classmethod
     def setUpTestData(cls) -> None:
-        cls.artists = [Artist(pk=i, name=f"Name {i}") for i in range(1, 51)]
+        cls.artists = [Artist(pk=i, name=f"Name {i}") for i in range(1, 151)]
         Artist.objects.bulk_create(cls.artists)
 
     def test_get_list(self):
         response = self.client.get(reverse("artists-list"))
         self.assertEqual(response.status_code, HTTP_200_OK)
         self.assertEqual(len(response.data), Artist.objects.count())
-        self.assertEqual(len(response.data), 50)
-        self.assertEqual(Artist.objects.count(), 50)
+        self.assertEqual(len(response.data), 150)
+        self.assertEqual(Artist.objects.count(), 150)
         self.assertTrue(all(["id" in r and "name" in r for r in response.data]))
 
-    @parameterized.expand([i + 1 for i in range(50)])
+    @parameterized.expand([i + 1 for i in range(150)])
     def test_get_by_id(self, pk: int):
         response = self.client.get(reverse("artists-retrieve", args=(pk,)))
         self.assertEqual(response.status_code, HTTP_200_OK)

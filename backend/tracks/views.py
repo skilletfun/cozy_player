@@ -18,6 +18,7 @@ class TrackListAPIView(ListAPIView):
     serializer_class = TrackSerializer
     filter_backends = (DjangoFilterBackend,)
     filterset_class = TrackFilter
+    pagination_class = None
 
 
 class TrackQueueAPIView(ListAPIView):
@@ -25,6 +26,7 @@ class TrackQueueAPIView(ListAPIView):
 
     queryset = Track.objects.annotate(artist_name=F("artist__name"))
     serializer_class = TrackSerializer
+    pagination_class = None
 
     def list(self, request, *args, **kwargs):
         tracks = self.get_queryset()

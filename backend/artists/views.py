@@ -12,6 +12,7 @@ class ArtistListAPIView(ListAPIView):
 
     queryset = Artist.objects.all()
     serializer_class = ArtistSerializer
+    pagination_class = None
 
 
 class ArtistGetAPIView(RetrieveAPIView):
