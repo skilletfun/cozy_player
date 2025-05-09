@@ -8,4 +8,5 @@ class TrackSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Track
+        read_only_fields = ["id", "artist", "path", "duration"]
         fields = "__all__"

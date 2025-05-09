@@ -10,6 +10,6 @@ from .views import (
 urlpatterns = [
     path("", TrackListAPIView.as_view(), name="tracks-list"),
     path("queue/", TrackQueueAPIView.as_view(), name="tracks-queue"),
-    path("<int:pk>/", TrackGetUpdateAPIView.as_view()),
+    path("<int:pk>/", TrackGetUpdateAPIView.as_view(), name="tracks-ru"),
     path("cover/<int:pk>/", TrackCoverGetAPIView.as_view(), name="tracks-cover"),
 ]
