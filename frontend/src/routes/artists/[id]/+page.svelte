@@ -2,13 +2,13 @@
     import { secondsToHumanString } from "$lib/utils.js";
     import { API } from "$lib/api.js";
     import TrackList from "$lib/components/TrackList.svelte";
-    import {playArtist} from "$lib/player.js";
+    import { playArtist } from "$lib/player.js";
     let { data } = $props();
 </script>
 
 <div class="artist-view">
     <div class="artist-header">
-        <img src="{API.Artists}cover/{data.artist.id}/" alt="cover">
+        <img src="{API.Artists.getCoverURL(data.artist.id)}" alt="cover">
         <div>
             <h1>{data.artist.name}</h1>
             <h2>{data.artist.tracks_count} Tracks • {secondsToHumanString(data.artist.duration)}</h2>

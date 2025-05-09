@@ -25,7 +25,7 @@ export function play() {
     const track = playQueue[currentTrackIndex];
     current.track = track;
 
-    player.src = `${API.Tracks}${track.id}/`;
+    player.src = `${API.Tracks.baseURL}${track.id}/`;
     player.load();
     player.play();
 
@@ -37,7 +37,7 @@ export function updateMediaSessionInfo(track) {
     navigator.mediaSession.metadata = new MediaMetadata({
       title: track.title,
       artist: track.artist_name,
-      artwork: [{src: `${API.Tracks}cover/${track.id}/`}]
+      artwork: [{src: `${API.Tracks.baseURL}cover/${track.id}/`}]
     });
     navigator.mediaSession.setPositionState({
         duration: track.duration,
@@ -46,16 +46,9 @@ export function updateMediaSessionInfo(track) {
     navigator.mediaSession.playbackState = "playing";
 }
 
-function onTrackEnds() {
+async function onTrackEnds() {
     const track = playQueue[currentTrackIndex];
-    fetch(
-        `${API.Tracks}${track.id}/`,
-        {
-            method: 'PATCH',
-            body: JSON.stringify({play_count: track.play_count + 1}),
-            headers: {"Content-Type": "application/json"},
-        },
-    );
+    await API.Tracks.incrementPlayCount(track);
     nextTrack();
 }
 
@@ -96,14 +89,14 @@ export function playTrack(track) {
 }
 
 export async function playArtist(artist) {
-    const responseTracks = await fetch(API.Tracks + `?artist=${artist.id}`);
+    const responseTracks = await API.Tracks.getList({artist: artist.id});
     playQueue = await responseTracks.json();
     currentTrackIndex = 0;
     play();
 }
 
 export async function playMainQueue() {
-    const responseTracks = await fetch(API.Queue);
+    const responseTracks = await API.Tracks.getQueue();
     playQueue = await responseTracks.json();
     currentTrackIndex = 0;
     play();

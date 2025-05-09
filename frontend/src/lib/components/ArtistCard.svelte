@@ -1,11 +1,11 @@
 <script>
   import { API } from "$lib/api.js";
-  import {playArtist} from "$lib/player.js";
+  import { playArtist } from "$lib/player.js";
   let { artist } = $props();
 </script>
 
 <div>
-  <img src="{API.ArtistCover}/{artist.id}/" alt="cover">
+  <img src="{API.Artists.getCoverURL(artist.id)}" alt="cover">
   <button aria-label="play" class="play-btn" onclick={() => playArtist(artist)}><i class="fas fa-play"></i></button>
   <a href="/artists/{artist.id}">{artist.name}</a>
 </div>

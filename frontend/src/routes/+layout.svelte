@@ -18,11 +18,11 @@
 
     async function rescanLibrary() {
         try {
-            await fetch(API.LibraryRescan);
+          await API.Library.rescan();
         }
         catch (e) {
-            console.log(e);
-            throw e;
+          console.log(e);
+          throw e;
         }
 
     }
