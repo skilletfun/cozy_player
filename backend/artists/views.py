@@ -1,10 +1,12 @@
 from django.db.models import Count, Sum
 from django.http import FileResponse
 from rest_framework.generics import ListAPIView, RetrieveAPIView
+from django_filters.rest_framework import DjangoFilterBackend
 
 from common.headers import COVER_HEADERS
 from .models import Artist
 from .serializers import ArtistSerializer, ArtistInfoSerializer
+from .filters import ArtistFilter
 
 
 class ArtistListAPIView(ListAPIView):
@@ -12,6 +14,8 @@ class ArtistListAPIView(ListAPIView):
 
     queryset = Artist.objects.all()
     serializer_class = ArtistSerializer
+    filter_backends = (DjangoFilterBackend,)
+    filterset_class = ArtistFilter
     pagination_class = None
 
 

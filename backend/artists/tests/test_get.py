@@ -9,12 +9,14 @@ from parameterized import parameterized
 from artists.models import Artist
 
 
-class ArtistGetTestCase(TestCase):
+class ArtistTestDataMixin:
     @classmethod
     def setUpTestData(cls) -> None:
         cls.artists = [Artist(pk=i, name=f"Name {i}") for i in range(1, 151)]
         Artist.objects.bulk_create(cls.artists)
 
+
+class ArtistGetListTestCase(ArtistTestDataMixin, TestCase):
     def test_get_list(self):
         response = self.client.get(reverse("artists-list"))
         self.assertEqual(response.status_code, HTTP_200_OK)
@@ -23,6 +25,15 @@ class ArtistGetTestCase(TestCase):
         self.assertEqual(Artist.objects.count(), 150)
         self.assertTrue(all(["id" in r and "name" in r for r in response.data]))
 
+    @parameterized.expand([("Name", 150), ("150", 1), ("1111", 0), ("20", 2)])
+    def test_get_list_filtered(self, value, count):
+        response = self.client.get(reverse("artists-list") + f"?name={value}")
+        self.assertEqual(response.status_code, HTTP_200_OK)
+        self.assertEqual(len(response.data), count)
+        self.assertTrue(all(["id" in r and "name" in r for r in response.data]))
+
+
+class ArtistGetByIdTestCase(ArtistTestDataMixin, TestCase):
     @parameterized.expand([i + 1 for i in range(150)])
     def test_get_by_id(self, pk: int):
         response = self.client.get(reverse("artists-retrieve", args=(pk,)))
@@ -36,6 +47,8 @@ class ArtistGetTestCase(TestCase):
         response = self.client.get(reverse("artists-retrieve", args=(pk,)))
         self.assertEqual(response.status_code, HTTP_404_NOT_FOUND)
 
+
+class ArtistGetCoverTestCase(ArtistTestDataMixin, TestCase):
     def test_get_cover_template(self):
         response = self.client.get(reverse("artists-cover", args=(1,)))
         self.assertEqual(response.status_code, HTTP_200_OK)
