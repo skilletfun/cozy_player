@@ -5,4 +5,5 @@ urlpatterns = [
     path("api/artists/", include("artists.urls")),
     path("api/tracks/", include("tracks.urls")),
     path("api/library/", include("library.urls")),
+    path("api/playlists/", include("playlists.urls")),
 ]
