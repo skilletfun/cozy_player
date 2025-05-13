@@ -15,7 +15,6 @@
 <style>
   a {
     height: 40px;
-    margin-top: 5px;
     display: flex;
     align-items: center;
     padding-right: 15px;

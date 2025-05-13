@@ -9,56 +9,79 @@
         setupPlayer();
 
         return () => {
-          // Cleanup
-          if ('mediaSession' in navigator) {
-            navigator.mediaSession.metadata = null;
-          }
+            // Cleanup
+            if ("mediaSession" in navigator) {
+                navigator.mediaSession.metadata = null;
+            }
         };
     });
 
     async function rescanLibrary() {
         try {
-          await API.Library.rescan();
+            await API.Library.rescan();
+        } catch (e) {
+            console.log(e);
+            throw e;
         }
-        catch (e) {
-          console.log(e);
-          throw e;
-        }
-
     }
-
 </script>
 
 <main>
     <div class="navigation">
-        <div style="display: flex;flex-direction: column">
-            <button class="btn" onclick={playMainQueue}>Play</button>
-            <button class="btn" onclick={rescanLibrary}>Rescan</button>
-        </div>
-        <h2>My Library</h2>
-        <NavigationButton title="Home" icon="home" href="/"/>
-        <NavigationButton title="Artists" icon="user-music" href="/artists"/>
-<!--        <NavigationButton title="Playlists" icon="list-music" href="/playlists"/>-->
-<!--        <NavigationButton title="Tracks" icon="list-music"/>-->
+        <button class="btn" onclick={playMainQueue}>Play</button>
+        <div class="spacer"></div>
+        <!-- <button class="btn" onclick={rescanLibrary}>Rescan</button> -->
+        <NavigationButton title="Home" icon="home" href="/" />
+        <NavigationButton title="Artists" icon="user-music" href="/artists" />
+        <NavigationButton
+            title="Playlists"
+            icon="list-music"
+            href="/playlists"
+        />
+        <NavigationButton title="Tracks" icon="list-music" href="/tracks" />
     </div>
-    {@render children()}
+    <div class="content">
+        {@render children()}
+    </div>
 </main>
 
 <style>
-  main {
-    display: flex;
-  }
-  div.navigation {
-    margin-top: 50px;
-    margin-left: 150px;
-  }
-  .btn {
-      width: 125px;
-      height: 40px;
-      font-size: 16px;
-      border-radius: 10px;
-      background-color: transparent;
-      border: 1px solid grey;
-      margin-bottom: 15px;
-  }
+    main {
+        display: flex;
+        flex-direction: column;
+    }
+    div.navigation {
+        margin-top: 10px;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+    }
+    div.content {
+        margin-left: 100px;
+        margin-right: 100px;
+    }
+    .spacer {
+        width: 100px;
+    }
+    .btn {
+        width: 120px;
+        height: 40px;
+        font-size: 16px;
+        border-radius: 10px;
+        background-color: transparent;
+        align-self: center;
+        align-items: center;
+        justify-content: center;
+        border-radius: 150px;
+        display: flex;
+        margin-left: -220px;
+    }
+    .btn:hover {
+        background-color: #3c3c3c;
+    }
+    .btn::before {
+        margin-right: 10px;
+        scale: 1.25;
+        content: "▶";
+    }
 </style>

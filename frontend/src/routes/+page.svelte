@@ -14,9 +14,8 @@
 <style>
     .container {
         margin-top: 100px;
-        margin-left: 250px;
-        flex-wrap: wrap;
-        display: flex;
-        flex-direction: row;
+        display: grid;
+        justify-self: center;
+        grid-template-columns: 1fr 1fr;
     }
 </style>
