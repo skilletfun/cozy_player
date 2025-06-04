@@ -1,28 +1,20 @@
 <script>
+    import {Notifications, acts} from '@tadashi/svelte-notification'
     import NavigationButton from "$lib/components/NavigationButton.svelte";
     import { onMount } from "svelte";
     import { playMainQueue, setupPlayer } from "$lib/player.js";
     import { API } from "$lib/api.js";
+    import { rescan } from "$lib/library.js";
     let { children } = $props();
 
     onMount(() => {
         setupPlayer();
-
         return () => {
             if ("mediaSession" in navigator) {
                 navigator.mediaSession.metadata = null;
             }
         };
     });
-
-    async function rescanLibrary() {
-        try {
-            await API.Library.rescan();
-        } catch (e) {
-            console.log(e);
-            throw e;
-        }
-    }
 </script>
 
 <main>
@@ -36,11 +28,13 @@
         />
         <div class="pipe">|</div>
         <button class="btn play" onclick={playMainQueue}>Play</button>
-        <button class="btn rescan" onclick={rescanLibrary}>Rescan</button>
+        <button class="btn rescan" onclick={rescan}>Rescan</button>
     </div>
     <div class="content">
         {@render children()}
     </div>
+    
+    <Notifications />
 </main>
 
 <style>
