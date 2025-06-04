@@ -1,0 +1,1 @@
+gunicorn cozy_player.wsgi -b 0.0.0.0:8000 -t 0 -w 4
