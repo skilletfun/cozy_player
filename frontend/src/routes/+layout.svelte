@@ -9,7 +9,6 @@
         setupPlayer();
 
         return () => {
-            // Cleanup
             if ("mediaSession" in navigator) {
                 navigator.mediaSession.metadata = null;
             }
@@ -28,9 +27,6 @@
 
 <main>
     <div class="navigation">
-        <button class="btn" onclick={playMainQueue}>Play</button>
-        <div class="spacer"></div>
-        <!-- <button class="btn" onclick={rescanLibrary}>Rescan</button> -->
         <NavigationButton title="Home" icon="home" href="/" />
         <NavigationButton title="Artists" icon="user-music" href="/artists" />
         <NavigationButton
@@ -38,7 +34,9 @@
             icon="list-music"
             href="/playlists"
         />
-        <NavigationButton title="Tracks" icon="list-music" href="/tracks" />
+        <div class="pipe">|</div>
+        <button class="btn play" onclick={playMainQueue}>Play</button>
+        <button class="btn rescan" onclick={rescanLibrary}>Rescan</button>
     </div>
     <div class="content">
         {@render children()}
@@ -60,28 +58,37 @@
         margin-left: 100px;
         margin-right: 100px;
     }
-    .spacer {
-        width: 100px;
+    .pipe {
+        align-self: center;
+        scale: 1.5;
+        margin-left: 15px;
+        margin-right: 15px;
     }
     .btn {
-        width: 120px;
         height: 40px;
         font-size: 16px;
         border-radius: 10px;
         background-color: transparent;
+        color: #E08B5D;
         align-self: center;
         align-items: center;
         justify-content: center;
         border-radius: 150px;
         display: flex;
-        margin-left: -220px;
+        padding-right: 15px;
+        padding-left: 15px;
     }
     .btn:hover {
         background-color: #3c3c3c;
     }
-    .btn::before {
+    .btn.play::before {
         margin-right: 10px;
         scale: 1.25;
         content: "▶";
+    }
+    .btn.rescan::before {
+        margin-right: 10px;
+        scale: 1.25;
+        content: "⟳"
     }
 </style>

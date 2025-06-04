@@ -21,9 +21,8 @@
 
 <style>
     .artist-view {
-        margin-top: 70px;
-        margin-left: 200px;
-        width: 100%;
+        justify-self: center;
+        margin-top: 50px;
     }
     .artist-header {
         display: flex;
