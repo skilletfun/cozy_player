@@ -12,7 +12,7 @@
 <style>
     div {
         overflow-y: scroll;
-        height: 550px;
+        height: 525px;
         scrollbar-width: thin;
         scrollbar-color: grey transparent;
     }
