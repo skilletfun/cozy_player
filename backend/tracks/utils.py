@@ -1,3 +1,4 @@
+from random import shuffle
 from collections import defaultdict
 
 
@@ -28,7 +29,8 @@ def shuffle_queue(tracks: list[dict]) -> list[dict]:
     затем перемешивает каждый такой батч
     """
     parts: dict[int, dict[int, list[dict]]] = defaultdict(lambda: defaultdict(list))
-
+    shuffle(tracks)
+    
     for track in tracks:
         parts[track["play_count"]][track["artist"]].append(track)
 
