@@ -1,2 +1,2 @@
-export let current = $state({track: undefined});
+export let current = $state({track: undefined, isPlayingNow: false});
 

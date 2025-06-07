@@ -10,6 +10,8 @@ export function setupPlayer() {
     if (!('mediaSession' in navigator)) return;
 
     document.getElementById("player").addEventListener("ended", onTrackEnds);
+    document.getElementById("player").addEventListener("play", () => { current.isPlayingNow = true; });
+    document.getElementById("player").addEventListener("pause", () => { current.isPlayingNow = false; });
 
     navigator.mediaSession.setActionHandler('play', resumePlaying);
     navigator.mediaSession.setActionHandler('pause', pausePlaying);
@@ -49,7 +51,7 @@ export function updateMediaSessionInfo(track) {
     navigator.mediaSession.metadata = new MediaMetadata({
       title: track.title,
       artist: track.artist_name,
-      artwork: [{src: `${API.Tracks.baseURL}cover/${track.id}/`}]
+      artwork: [{src: API.Tracks.getCoverURL(track.id)}]
     });
     navigator.mediaSession.setPositionState({
         duration: track.duration,
