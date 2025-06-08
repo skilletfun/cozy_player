@@ -1,8 +1,10 @@
+import os
 from django.http import FileResponse, HttpResponse
 from django.db.models import F
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.generics import ListAPIView, RetrieveAPIView, RetrieveUpdateAPIView
 from rest_framework.response import Response
+from rest_framework.exceptions import NotFound
 
 from common.headers import COVER_HEADERS, TRACK_HEADERS
 from .models import Track
@@ -41,7 +43,9 @@ class TrackGetUpdateAPIView(RetrieveUpdateAPIView):
     serializer_class = TrackSerializer
 
     def retrieve(self, request, *args, **kwargs):
-        return FileResponse(open(self.get_object().path, "rb"), headers=TRACK_HEADERS)
+        if not os.path.exists(track_path := self.get_object().path):
+            raise NotFound(f"Track not found: {track_path}")
+        return FileResponse(open(track_path, "rb"), headers=TRACK_HEADERS)
 
 
 class TrackCoverGetAPIView(RetrieveAPIView):

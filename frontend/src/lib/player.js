@@ -9,6 +9,7 @@ export function setupPlayer() {
   try {
     if (!('mediaSession' in navigator)) return;
 
+    document.getElementById("player").addEventListener("error", () => { acts.add({mode: 'danger', message: `Cannot play track`, lifetime: 5}); });
     document.getElementById("player").addEventListener("ended", onTrackEnds);
     document.getElementById("player").addEventListener("play", () => { current.isPlayingNow = true; });
     document.getElementById("player").addEventListener("pause", () => { current.isPlayingNow = false; });
