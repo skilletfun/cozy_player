@@ -33,8 +33,11 @@
   img {
     align-self: center;
     border-radius: 10px;
-    max-width: 75%;
+    width: 115px;
+    height: 115px;
+    object-fit: cover;
     margin-top: 15px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
   }
 
   a {
