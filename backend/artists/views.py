@@ -12,7 +12,7 @@ from .filters import ArtistFilter
 class ArtistListAPIView(ListAPIView):
     """Список исполнителей"""
 
-    queryset = Artist.objects.all()
+    queryset = Artist.objects.order_by("name").all()
     serializer_class = ArtistSerializer
     filter_backends = (DjangoFilterBackend,)
     filterset_class = ArtistFilter
