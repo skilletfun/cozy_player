@@ -1,0 +1,22 @@
+services:
+  api:
+    container_name: api
+    build:
+      target: api
+      context: .
+    volumes:
+      - /home/skilletfun/Music:/music
+    command: > 
+      sh -c "python manage.py migrate &&
+             gunicorn cozy_player.wsgi -b 0.0.0.0:8000 -t 0 -w 4"
+
+  app:
+    build:
+      target: app
+      context: .
+      args:
+        API_URL: "http://localhost:3000/api"
+    depends_on:
+      - api
+    ports:
+      - "3000:80"

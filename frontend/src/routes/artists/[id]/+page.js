@@ -1,3 +1,4 @@
+export const ssr = false;
 import { API } from "$lib/api.js";
 
 export async function load({ fetch, params }) {

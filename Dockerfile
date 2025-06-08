@@ -3,6 +3,7 @@ FROM python:3.11.1-slim as api
 
 ENV UV_COMPILE_BYTECODE=1
 ENV UV_PROJECT_ENVIRONMENT="/usr/local/"
+ENV MUSIC_FOLDER="/music" 
 
 WORKDIR /api
 
@@ -15,24 +16,30 @@ RUN uv sync --locked
 
 COPY ./backend .
 
-CMD ["gunicorn", "cozy_player.wsgi", "-b", "0.0.0.0:8000", "-t", "0", "-w", "4"]
-
 
 #=======================================================
-FROM oven/bun:1.0 as app
+FROM oven/bun:1.2.8 as build-app
+
+ARG API_URL
 
 WORKDIR /app
 
 RUN apt-get update
 
-COPY package.json bun.lock ./
+COPY ./frontend/package.json ./frontend/bun.lock ./
 
-RUN bun install --frozen-lockfile --production
+RUN bun install --frozen-lockfile
 
 COPY ./frontend ./
+RUN echo 'PUBLIC_API_URL="${API_URL}"' > .env
 
 RUN bun run build
 
-EXPOSE 3000
 
-CMD ["bun", "run", "start"]
+#=======================================================
+FROM nginx:alpine AS app
+
+COPY .nginx/nginx.conf /etc/nginx/conf.d/default.conf
+COPY --from=build-app /app/build /usr/share/nginx/html
+
+ENTRYPOINT ["nginx", "-g", "daemon off;"]

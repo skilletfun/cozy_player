@@ -1,4 +1,6 @@
-export const API_URL = "http://127.0.0.1:8000/api";
+import { current } from "./shared.svelte";
+
+const API_URL = current.API_URL;
 
 async function get(url, params) {
     const urlParams = new URLSearchParams(params);

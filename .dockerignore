@@ -1,4 +1,4 @@
-*.sqlite3
+backend/db.sqlite3
 node_modules
 .svelte-kit
 .DS_Store
