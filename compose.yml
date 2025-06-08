@@ -6,6 +6,7 @@ services:
       context: .
     volumes:
       - /home/skilletfun/Music:/music
+      - /home/skilletfun/PycharmProjects/cozy_player/backend/db.sqlite3:/api/db.sqlite3
     command: > 
       sh -c "python manage.py migrate &&
              gunicorn cozy_player.wsgi -b 0.0.0.0:8000 -t 0 -w 4"
