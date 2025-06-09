@@ -21,11 +21,6 @@
     <div class="navigation">
         <NavigationButton title="Home" icon="home" href="/" />
         <NavigationButton title="Artists" icon="user-music" href="/artists" />
-        <!-- <NavigationButton
-            title="Playlists"
-            icon="list-music"
-            href="/playlists"
-        /> -->
         <div class="pipe">|</div>
         <button class="btn play" onclick={playMainQueue}>Play</button>
         <button class="btn rescan" onclick={rescan}>Rescan</button>
