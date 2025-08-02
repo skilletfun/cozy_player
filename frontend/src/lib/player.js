@@ -38,11 +38,7 @@ export function setupPlayer() {
 export function play() {
   try {
     let player = document.getElementById("player");
-    console.log(
-      "try to play: ",
-      APP_DATA.currentTrack,
-      APP_DATA.currentTrack.id,
-    );
+
     player.src = `${ENV.API_URL}/track/${APP_DATA.currentTrack.id}`;
     player.load();
     player.play();
