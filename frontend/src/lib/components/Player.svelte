@@ -13,6 +13,10 @@
     function getFunction() {
         return APP_DATA.isPlayingNow ? pausePlaying() : resumePlaying();
     }
+
+    function getArtistName(artistId) {
+        return APP_DATA.artists.find((e) => e.id == artistId).name;
+    }
 </script>
 
 <div class="container">
@@ -27,9 +31,9 @@
                 <p class="track-title">{APP_DATA.currentTrack.title}</p>
                 <a
                     class="track-group"
-                    href="/artists/{APP_DATA.currentTrack.artist}"
+                    href="/artists/{APP_DATA.currentTrack.artistId}"
                 >
-                    {APP_DATA.currentTrack.artist_name}
+                    {getArtistName(APP_DATA.currentTrack.artistId)}
                 </a>
                 <div class="player-controls">
                     <PlayerButton icon="backward" onclick={previousTrack} />
