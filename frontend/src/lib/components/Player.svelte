@@ -67,7 +67,7 @@
         display: flex;
         flex-direction: row;
         justify-content: space-between;
-        width: 60%;
+        width: 50%;
         margin-top: 25px;
     }
 
@@ -85,8 +85,10 @@
     img {
         align-self: center;
         border-radius: 35px;
-        width: 256px;
+        height: 300px;
+        width: 300px;
         margin-top: 15px;
+        object-fit: cover;
         box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     }
 
