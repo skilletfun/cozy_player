@@ -1,10 +1,11 @@
 <script>
-    import {Notifications, acts} from '@tadashi/svelte-notification'
-    import NavigationButton from "$lib/components/NavigationButton.svelte";
     import { onMount } from "svelte";
+    import { Notifications, acts } from "@tadashi/svelte-notification";
+    import NavigationButton from "$lib/components/NavigationButton.svelte";
     import { playMainQueue, setupPlayer } from "$lib/player.js";
     import { API } from "$lib/api.js";
-    import { rescan } from "$lib/library.js";
+    import { Rescan } from "$lib/library.js";
+
     let { children } = $props();
 
     onMount(() => {
@@ -23,12 +24,12 @@
         <NavigationButton title="Artists" icon="user-music" href="/artists" />
         <div class="pipe">|</div>
         <button class="btn play" onclick={playMainQueue}>Play</button>
-        <button class="btn rescan" onclick={rescan}>Rescan</button>
+        <button class="btn rescan" onclick={Rescan}>Rescan</button>
     </div>
     <div class="content">
         {@render children()}
     </div>
-    
+
     <Notifications />
 </main>
 
@@ -58,7 +59,7 @@
         font-size: 16px;
         border-radius: 10px;
         background-color: transparent;
-        color: #E08B5D;
+        color: #e08b5d;
         align-self: center;
         align-items: center;
         justify-content: center;
@@ -78,6 +79,6 @@
     .btn.rescan::before {
         margin-right: 10px;
         scale: 1.25;
-        content: "⟳"
+        content: "⟳";
     }
 </style>

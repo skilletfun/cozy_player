@@ -3,17 +3,20 @@
     import { API } from "$lib/api.js";
     import TrackList from "$lib/components/TrackList.svelte";
     import { playArtist } from "$lib/player.js";
+
     let { data } = $props();
+    let artistInfoHeader = `${data.artist.tracksCount} Tracks • ${secondsToHumanString(data.artist.duration)}`;
 </script>
 
 <div class="artist-view">
     <div class="artist-header">
-        <img src="{API.Artists.getCoverURL(data.artist.id)}" alt="cover">
+        <img src={API.Artists.GetCoverURL(data.artist.id)} alt="cover" />
         <div>
             <h1>{data.artist.name}</h1>
-            <h2>{data.artist.tracks_count} Tracks • {secondsToHumanString(data.artist.duration)}</h2>
-            <button class="play-btn" onclick={() => playArtist(data.artist)}><i class="fas fa-play"></i> Play</button>
-            <button aria-label="play" class="more"><i class="fas fa-ellipsis-h"></i></button>
+            <h2>{artistInfoHeader}</h2>
+            <button class="play-btn" onclick={() => playArtist(data.artist)}>
+                <i class="fas fa-play"></i> Play
+            </button>
         </div>
     </div>
     <TrackList data={data.tracks} />
@@ -45,14 +48,5 @@
     }
     .play-btn:active {
         background-color: #373737;
-    }
-    .more {
-        margin-left: 15px;
-        height: 35px;
-        width: 35px;
-        border-radius: 18px;
-        border-width: 0;
-        cursor: pointer;
-        background-color: transparent;
     }
 </style>

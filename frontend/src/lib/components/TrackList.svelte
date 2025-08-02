@@ -5,7 +5,7 @@
 
 <div>
     {#each data as track, index}
-        <TrackItem index={index} track={track}/>
+        <TrackItem {index} {track} />
     {/each}
 </div>
 

@@ -1,17 +1,24 @@
 <script>
     import { playTrack } from "$lib/player.js";
-    import { current } from "$lib/shared.svelte.js";
+    import { APP_DATA } from "$lib/shared.svelte.js";
 
     let { index, track } = $props();
 
     function isCurrentTrack() {
-        return current.track && current.track.id === track.id && current.track.artist === track.artist;
+        return (
+            APP_DATA.currentTrack &&
+            APP_DATA.currentTrack.id === track.id &&
+            APP_DATA.currentTrack.artist === track.artist
+        );
     }
 </script>
 
 <div>
-    <p>{`${index + 1}`.padStart(5, ' ')}</p>
-    <button onclick={() => playTrack(track)} class={isCurrentTrack() ? 'current' : '' }>{track.title}</button>
+    <p>{`${index + 1}`.padStart(5, " ")}</p>
+    <button
+        onclick={() => playTrack(track)}
+        class={isCurrentTrack() ? "current" : ""}>{track.title}</button
+    >
 </div>
 
 <style>

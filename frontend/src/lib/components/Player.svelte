@@ -1,30 +1,47 @@
 <script>
-    import { current } from "$lib/shared.svelte.js";
+    import { APP_DATA } from "$lib/shared.svelte.js";
     import { API } from "$lib/api";
-    import { playMainQueue, previousTrack, nextTrack, pausePlaying, resumePlaying } from "$lib/player";
+    import {
+        playMainQueue,
+        previousTrack,
+        nextTrack,
+        pausePlaying,
+        resumePlaying,
+    } from "$lib/player";
     import PlayerButton from "./PlayerButton.svelte";
 
     function getFunction() {
-      return current.isPlayingNow ? pausePlaying() : resumePlaying();
+        return APP_DATA.isPlayingNow ? pausePlaying() : resumePlaying();
     }
-    
 </script>
 
 <div class="container">
     <div style="display: flex;">
-        {#if current.track && current.track.id}
-            <img class="cover" src={ API.Tracks.getCoverURL(current.track.id) } alt="Cover"/>
+        {#if APP_DATA.currentTrack && APP_DATA.currentTrack.id}
+            <img
+                class="cover"
+                src={API.Tracks.GetCoverURL(APP_DATA.currentTrack.id)}
+                alt="Cover"
+            />
             <div class="player-info">
-                <p class="track-title">{ current.track.title }</p>
-                <a class="track-group" href="/artists/{current.track.artist}">{current.track.artist_name}</a>
+                <p class="track-title">{APP_DATA.currentTrack.title}</p>
+                <a
+                    class="track-group"
+                    href="/artists/{APP_DATA.currentTrack.artist}"
+                >
+                    {APP_DATA.currentTrack.artist_name}
+                </a>
                 <div class="player-controls">
-                    <PlayerButton icon='backward' onclick={ previousTrack }/>
-                    <PlayerButton icon={ current.isPlayingNow ? 'pause' : 'play' } onclick={ getFunction }/>
-                    <PlayerButton icon='forward' onclick={ nextTrack }/>
+                    <PlayerButton icon="backward" onclick={previousTrack} />
+                    <PlayerButton
+                        icon={APP_DATA.isPlayingNow ? "pause" : "play"}
+                        onclick={getFunction}
+                    />
+                    <PlayerButton icon="forward" onclick={nextTrack} />
                 </div>
             </div>
         {:else}
-            <button class="btn play" onclick={ playMainQueue }>Play</button>
+            <button class="btn play" onclick={playMainQueue}>Play</button>
         {/if}
     </div>
 </div>
@@ -37,7 +54,7 @@
         flex-direction: column;
         justify-content: center;
     }
-    
+
     .player-info {
         display: flex;
         width: 600px;
@@ -45,7 +62,7 @@
         align-items: center;
         flex-direction: column;
     }
-    
+
     .player-controls {
         display: flex;
         flex-direction: row;
@@ -53,32 +70,32 @@
         width: 60%;
         margin-top: 25px;
     }
-    
+
     p.track-title {
         font-size: 30px;
         text-align: center;
         width: 500px;
     }
-    
+
     a.track-group {
         font-size: 20px;
         margin-top: -10px;
     }
-    
+
     img {
-      align-self: center;
-      border-radius: 35px;
-      width: 256px;
-      margin-top: 15px;
-      box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+        align-self: center;
+        border-radius: 35px;
+        width: 256px;
+        margin-top: 15px;
+        box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     }
-    
+
     .btn {
         height: 80px;
         font-size: 36px;
         border-radius: 10px;
         background-color: transparent;
-        color: #E08B5D;
+        color: #e08b5d;
         align-self: center;
         align-items: center;
         justify-content: center;

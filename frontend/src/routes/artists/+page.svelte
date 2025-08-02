@@ -4,8 +4,8 @@
 </script>
 
 <div>
-    {#each data.artists as artist }
-        <ArtistCard artist={artist} />
+    {#each data.artists as artist}
+        <ArtistCard {artist} />
     {/each}
 </div>
 
