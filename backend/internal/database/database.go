@@ -3,8 +3,8 @@ package database
 import (
 	"gcozy_player/config"
 	"gcozy_player/internal/model"
-
-	"gorm.io/driver/sqlite"
+	
+	"github.com/glebarez/sqlite"
 	"gorm.io/gorm"
 )
 
