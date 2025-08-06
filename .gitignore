@@ -13,6 +13,7 @@ lerna-debug.log*
 .env
 __pycache__
 .go
+*.nix
 
 node_modules
 dist
