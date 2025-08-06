@@ -20,7 +20,7 @@
 </script>
 
 <div class="container">
-    <div style="display: flex;">
+    <div style="display:flex;justify-content:center;">
         {#if APP_DATA.currentTrack && APP_DATA.currentTrack.id}
             <img
                 class="cover"

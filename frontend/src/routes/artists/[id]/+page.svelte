@@ -24,7 +24,7 @@
 
 <style>
     .artist-view {
-        justify-self: center;
+        align-self: center;
         margin-top: 50px;
     }
     .artist-header {

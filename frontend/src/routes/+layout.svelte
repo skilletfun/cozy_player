@@ -38,6 +38,10 @@
         display: flex;
         flex-direction: column;
     }
+    .content {
+        display: flex;
+        flex-direction: column;
+    }
     div.navigation {
         margin-top: 10px;
         display: flex;
