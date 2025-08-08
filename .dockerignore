@@ -13,3 +13,4 @@ build
 .ropeproject
 .go
 *.nix
+.music
