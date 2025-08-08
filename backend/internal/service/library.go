@@ -7,6 +7,7 @@ import (
 	"gcozy_player/pkg/ffmpeg"
 	"gcozy_player/pkg/track"
 	"io/fs"
+	"log"
 	"os"
 	"path/filepath"
 	"sync"
@@ -66,6 +67,7 @@ func (l *libraryService) Rescan() error {
 	var wg sync.WaitGroup
 	var err error
 	entries, _ := os.ReadDir(l.conf.MusicFolder)
+	log.Println("Scan music directory: ", l.conf.MusicFolder)
 	for _, entry := range entries {
 		wg.Add(1)
 		go func() {
@@ -115,6 +117,7 @@ func (l *libraryService) Rescan() error {
 // 2) if track file in library, remove it from tracks to prevent being deleted;
 // 3) if track file not in library, add it to return result.
 func (l *libraryService) CollectNewTracks(walkPath string, tracks map[string]*model.Track) []string {
+	log.Println("Scan artist directory: ", walkPath)
 	var newTrackPaths []string
 	filepath.WalkDir(
 		walkPath,
@@ -129,6 +132,7 @@ func (l *libraryService) CollectNewTracks(walkPath string, tracks map[string]*mo
 			return err
 		},
 	)
+	log.Println("Found ", len(newTrackPaths), "tracks in artist: ", walkPath)
 	return newTrackPaths
 }
 
@@ -145,6 +149,7 @@ func (l *libraryService) CreateNewTracks(trackPaths []string, artistId uint) err
 			defer wg.Done()
 			info, err := ffmpeg.GetFileInfo(trackPath)
 			if err != nil {
+				log.Println("Error ffmpeg.GetFileInfo(trackPath): ", err.Error())
 				return
 			}
 			newTrack := model.Track{
