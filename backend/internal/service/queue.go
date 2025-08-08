@@ -6,6 +6,7 @@ import (
 	"gcozy_player/internal/model"
 	"gcozy_player/pkg/structs"
 	"gcozy_player/pkg/utils"
+	"log"
 	"maps"
 	"slices"
 
@@ -100,6 +101,7 @@ func (q *queueService) GenerateByTrack(artist int) error {
 
 // Generate is the method to generate new track's playing queue by provided tracks.
 func (q *queueService) Generate(tracks *[]model.Track) {
+	log.Println("Generate playing queue with ", len(*tracks), " tracks...")
 	q.queue.Clear()
 
 	utils.Shuffle(tracks)
@@ -112,6 +114,8 @@ func (q *queueService) Generate(tracks *[]model.Track) {
 			q.queue.Push(track)
 		}
 	}
+	log.Println("Generated queue: ")
+	q.queue.Print()
 }
 
 // SortTracksByPlayCount returns tracks sorted by play_count and artists.
