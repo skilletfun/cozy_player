@@ -151,6 +151,7 @@ export function seekTo(seekTime) {
 
 export async function playTrack(track) {
   try {
+    await loadArtists();
     await API.Queue.GenerateByTrack(track.id);
     await nextTrack();
   } catch (e) {
@@ -164,6 +165,7 @@ export async function playTrack(track) {
 
 export async function playArtist(artist) {
   try {
+    await loadArtists();
     await API.Queue.GenerateByArtist(artist.id);
     await nextTrack();
   } catch (e) {
@@ -177,6 +179,7 @@ export async function playArtist(artist) {
 
 export async function playMainQueue() {
   try {
+    await loadArtists();
     await API.Queue.Generate();
     await nextTrack();
   } catch (e) {
@@ -185,5 +188,13 @@ export async function playMainQueue() {
       message: `Error in playMainQueue: ${e.message}`,
       lifetime: 5,
     });
+  }
+}
+
+async function loadArtists() {
+  if (Object.values(APP_DATA.artists).length == 0) {
+    const response = await API.Artists.GetList();
+    const data = await response.json();
+    APP_DATA.artists = data;
   }
 }

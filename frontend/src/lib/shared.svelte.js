@@ -7,5 +7,5 @@ export let ENV = $state({
 export let APP_DATA = $state({
   currentTrack: undefined,
   isPlayingNow: false,
-  artists: {},
+  artists: [],
 });
