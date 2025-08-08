@@ -9,7 +9,7 @@ type Config struct {
 
 func LoadConfig() *Config {
 	config := Config{
-		MusicFolder: "/home/skilletfun/Music",
+		MusicFolder: "/music",
 		Database:    "database.db",
 	}
 
