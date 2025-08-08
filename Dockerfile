@@ -3,7 +3,6 @@ FROM golang:1.24-alpine as build-api
 
 ENV GOOS linux
 ENV CGO_ENABLED 0
-ENV MUSIC_FOLDER="/music" 
 
 WORKDIR /api
 
@@ -32,6 +31,10 @@ RUN bun run build
 
 #=======================================================
 FROM nginx:alpine AS app
+
+RUN apk update
+RUN apk upgrade
+RUN apk add --no-cache ffmpeg
 
 COPY --from=build-api /api/main /app/main
 
