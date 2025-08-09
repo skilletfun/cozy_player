@@ -1,7 +1,5 @@
 package config
 
-import "os"
-
 type Config struct {
 	MusicFolder string
 	Database    string
@@ -10,15 +8,7 @@ type Config struct {
 func LoadConfig() *Config {
 	config := Config{
 		MusicFolder: "/music",
-		Database:    "database.db",
-	}
-
-	if musicFolder := os.Getenv("MUSIC_FOLDER"); musicFolder != "" {
-		config.MusicFolder = musicFolder
-	}
-
-	if database := os.Getenv("DATABASE"); database != "" {
-		config.Database = database
+		Database:    "/db/database.db",
 	}
 
 	return &config
