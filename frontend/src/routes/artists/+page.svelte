@@ -4,8 +4,8 @@
 </script>
 
 <div>
-    {#each data.artists as artist }
-        <ArtistCard artist={artist} />
+    {#each data.artists as artist}
+        <ArtistCard {artist} />
     {/each}
 </div>
 
@@ -13,5 +13,8 @@
     div {
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        overflow-y: auto;
+        scrollbar-width: none;
+        grid-auto-rows: min-content;
     }
 </style>

@@ -1,5 +1,6 @@
 _old
 *.sqlite3
+*.db
 .idea
 # Logs
 logs
@@ -11,6 +12,9 @@ pnpm-debug.log*
 lerna-debug.log*
 .env
 __pycache__
+.go
+*.nix
+.music
 
 node_modules
 dist
