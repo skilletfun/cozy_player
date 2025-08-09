@@ -19,6 +19,7 @@
         onclick={() => playTrack(track)}
         class={isCurrentTrack() ? "current" : ""}>{track.title}</button
     >
+    <p class="album">{track.album}</p>
 </div>
 
 <style>
@@ -32,12 +33,19 @@
         color: #777777;
         white-space: break-spaces;
     }
+    p.album {
+        font-size: 14px;
+        margin-left: 20px;
+        line-height: 1;
+    }
 
     button {
         border-width: 0;
         font-family: monospace;
         font-size: 16px;
         background-color: transparent;
+        width: 400px;
+        text-align: left;
     }
     button.current {
         color: orangered;
