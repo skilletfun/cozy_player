@@ -13,6 +13,12 @@ podman run -d -p 8000:80 \
 --name cozy-player --replace cozy-player:latest
 ```
 
+# Push container to Docker Hub
+
+```
+podman push <container-id> docker://docker.io/skilletfun/cozy-player:<tag>
+```
+
 # TODO:
 
 - rescan должен влиять на очередь воспроизведения, там могут быть невалидные треки
