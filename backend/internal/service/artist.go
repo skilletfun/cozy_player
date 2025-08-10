@@ -6,7 +6,6 @@ import (
 	"gcozy_player/internal/model"
 	"gcozy_player/pkg/cover"
 	"os"
-	"sync"
 
 	"gorm.io/gorm"
 )
@@ -18,7 +17,9 @@ type ArtistService interface {
 	UpdateCovers() error
 	UpdateCover(artist *model.Artist) error
 	Create(artist *model.Artist) error
+	BulkCreate(artists *[]model.Artist) error
 	Delete(artist *model.Artist) error
+	BulkDelete(artist *[]model.Artist) error
 	DeleteWithoutTracks() error
 }
 
@@ -74,17 +75,12 @@ func (a *artistService) UpdateCovers() error {
 		return err
 	}
 
-	var wg sync.WaitGroup
 	for _, artist := range *artists {
-		wg.Add(1)
-
-		go func(o *model.Artist) {
-			defer wg.Done()
-			go a.UpdateCover(o)
-		}(&artist)
+		if err := a.UpdateCover(&artist); err != nil {
+			return err
+		}
 	}
-
-	wg.Wait()
+		
 	return nil
 }
 
@@ -118,8 +114,16 @@ func (a *artistService) Create(artist *model.Artist) error {
 	return a.db.Create(artist).Error
 }
 
+func (a *artistService) BulkCreate(artists *[]model.Artist) error {
+	return a.db.Create(artists).Error
+}
+
 func (a *artistService) Delete(artist *model.Artist) error {
 	return a.db.Delete(artist).Error
+}
+
+func (a *artistService) BulkDelete(artists *[]model.Artist) error {
+	return a.db.Delete(artists).Error
 }
 
 // DeleteWithoutTracks is the method to delete all artists that have no tracks.
