@@ -35,7 +35,7 @@ func NewTrackService(c container.Container) TrackService {
 // GetAll returns all tracks sorted by album and title in ascending order.
 func (t *trackService) GetAll() (*[]model.Track, error) {
 	tracks := []model.Track{}
-	err := t.db.Find(&tracks).Order("album ASC, title ASC").Error
+	err := t.db.Order("album ASC, title ASC").Find(&tracks).Error
 	return &tracks, err
 }
 
@@ -44,8 +44,8 @@ func (t *trackService) GetAllByArtist(artistId int) (*[]model.Track, error) {
 	tracks := []model.Track{}
 	err := t.db.
 		Where("artist_id = ?", artistId).
-		Find(&tracks).
-		Order("album ASC, title ASC").Error
+		Order("album ASC, title ASC").
+		Find(&tracks).Error
 	return &tracks, err
 }
 
