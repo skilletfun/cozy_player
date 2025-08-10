@@ -109,7 +109,7 @@ func (q *queueService) Generate(tracks *[]model.Track) {
 	sortedPartKeys := slices.Collect(maps.Keys(parts))
 	slices.Sort(sortedPartKeys)
 
-	for _, key := range sortedPartKeys {
+	for _, key := range slices.Backward(sortedPartKeys) {
 		for _, track := range q.ShuffleTracks(parts[key]) {
 			q.queue.Push(track)
 		}
