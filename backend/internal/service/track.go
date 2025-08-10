@@ -51,7 +51,7 @@ func (t *trackService) GetAllByArtist(artistId int) (*[]model.Track, error) {
 // GetByID returns track by id.
 func (t *trackService) GetByID(id int) (*model.Track, error) {
 	track := model.Track{}
-	err := t.db.First(&track, id).Error
+	err := t.db.Joins("Artist").First(&track, id).Error
 	return &track, err
 }
 
@@ -69,7 +69,7 @@ func (t *trackService) IncrementPlayCount(id int) error {
 func (t *trackService) GetCover(id int) (string, []byte) {
 	if track, err := t.GetByID(id); err != nil {
 		return "", nil
-	} else if picture, _ := ffmpeg.GetCover(track.Path); picture != nil {
+	} else if picture, _ := ffmpeg.GetCover(track.Path); len(picture) > 0 {
 		return "image/jpeg", picture
 	} else {
 		return t.GetCoverFromArtist(track)
@@ -82,7 +82,7 @@ func (t *trackService) GetCoverFromArtist(track *model.Track) (string, []byte) {
 		return "", nil
 	}
 
-	path := t.conf.MusicFolder + "/" + track.Artist.Cover
+	path := track.Artist.Cover
 	if picture, err := os.ReadFile(path); err != nil {
 		return "", nil
 	} else {
