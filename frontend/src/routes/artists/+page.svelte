@@ -16,5 +16,6 @@
         overflow-y: auto;
         scrollbar-width: none;
         grid-auto-rows: min-content;
+        height: 90vh;
     }
 </style>
