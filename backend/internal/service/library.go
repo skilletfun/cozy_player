@@ -70,6 +70,8 @@ func (l *libraryService) Rescan() error {
 		return err
 	} else {
 		var wg sync.WaitGroup
+		var tcm sync.Mutex
+		var tdm sync.Mutex
 		
 		tracksForCreate := []model.Track{}
 		tracksForDelete := []model.Track{}
@@ -84,10 +86,14 @@ func (l *libraryService) Rescan() error {
 				}
 				
 				newTracks := l.CollectNewTracks(artist, artistTracks[artist.ID])
+				tcm.Lock()
 				tracksForCreate = append(tracksForCreate, *newTracks...)
-
+				tcm.Unlock()
+				
 				for _, v := range artistTracks[artist.ID] {
+					tdm.Lock()
 					tracksForDelete = append(tracksForDelete, *v)
+					tdm.Unlock()
 				}
 			}()
 		}
@@ -172,8 +178,8 @@ func (l *libraryService) CollectNewTracks(artist model.Artist, tracks map[string
 		walkPath,
 		func(path string, d fs.DirEntry, err error) error {
 			if err == nil && !d.IsDir() && track.IsTrackFile(d.Name()) {
-				if _, ok := tracks[d.Name()]; ok {
-					delete(tracks, d.Name())
+				if _, ok := tracks[path]; ok {
+					delete(tracks, path)
 				} else {
 					newTrackPaths = append(newTrackPaths, path)
 				}
