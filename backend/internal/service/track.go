@@ -20,6 +20,7 @@ type TrackService interface {
 	Create(track *model.Track) error
 	BulkCreate(tracks *[]model.Track) error
 	Delete(track *model.Track) error
+	BulkDelete(tracks *[]model.Track) error
 }
 
 type trackService struct {
@@ -101,4 +102,8 @@ func (t *trackService) BulkCreate(tracks *[]model.Track) error {
 
 func (t *trackService) Delete(track *model.Track) error {
 	return t.db.Delete(track).Error
+}
+
+func (t *trackService) BulkDelete(tracks *[]model.Track) error {
+	return t.db.Delete(tracks).Error
 }
