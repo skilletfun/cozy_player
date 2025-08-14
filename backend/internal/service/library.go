@@ -72,6 +72,7 @@ func (l *libraryService) Rescan() error {
 		var wg sync.WaitGroup
 		var tcm sync.Mutex
 		var tdm sync.Mutex
+		var atm sync.Mutex
 		
 		tracksForCreate := []model.Track{}
 		tracksForDelete := []model.Track{}
@@ -82,7 +83,9 @@ func (l *libraryService) Rescan() error {
 				defer wg.Done()
 
 				if _, ok := artistTracks[artist.ID]; !ok {
+					atm.Lock()
 					artistTracks[artist.ID] = map[string]*model.Track{}
+					atm.Unlock()
 				}
 				
 				newTracks := l.CollectNewTracks(artist, artistTracks[artist.ID])
