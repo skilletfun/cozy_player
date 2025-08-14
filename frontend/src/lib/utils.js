@@ -10,12 +10,12 @@ export function secondsToHumanString(value, short = false) {
 
   const hours = Math.floor(value / 3600);
   if (hours) {
-    result = hours + hourLabel + numberEnding(hours) + " ";
+    result = `${hours}` + hourLabel + numberEnding(hours);
   }
   const minutes = Math.floor((value % 3600) / 60);
   if (minutes) {
-    return result + minutes + minLabel + numberEnding(minutes);
+    return result + ` ${minutes}` + minLabel + numberEnding(minutes);
   }
 
-  return "-";
+  return result;
 }
