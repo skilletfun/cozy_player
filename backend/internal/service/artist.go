@@ -68,7 +68,7 @@ func (a *artistService) GetInfoByID(id int) (*model.ArtistInfo, error) {
 }
 
 // UpdateCovers is the method to update artist's covers.
-// Run UpdateCover method for all artists.
+// It runs UpdateCover method for all artists.
 func (a *artistService) UpdateCovers() error {
 	artists, err := a.GetAll()
 	if err != nil {

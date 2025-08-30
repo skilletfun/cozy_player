@@ -6,7 +6,6 @@ import (
 	"gcozy_player/internal/service"
 	"gcozy_player/pkg/response"
 	"net/http"
-	"strconv"
 
 	"github.com/gin-gonic/gin"
 )
@@ -15,6 +14,11 @@ type QueueController interface {
 	Generate(c *gin.Context)
 	Next(c *gin.Context)
 	Prev(c *gin.Context)
+}
+
+type GenerateQueueBy struct {
+	ArtistId int
+	TrackId  int
 }
 
 type queueController struct {
@@ -27,20 +31,16 @@ func NewQueueController(c container.Container) QueueController {
 
 // Generate is the method to generate new track's playing queue.
 func (q *queueController) Generate(c *gin.Context) {
-	var err error
+	generateBy := GenerateQueueBy{}
+	if c.Bind(&generateBy) != nil {
+		return
+	}
 
-	if artistId := c.Query("artistId"); artistId != "" {
-		if artistId, err := strconv.Atoi(artistId); err != nil {
-			response.BadRequest(c, err)
-		} else {
-			err = q.service.GenerateByArtist(artistId)
-		}
-	} else if trackId := c.Query("trackId"); trackId != "" {
-		if trackId, err := strconv.Atoi(trackId); err != nil {
-			response.BadRequest(c, err)
-		} else {
-			err = q.service.GenerateByTrack(trackId)
-		}
+	var err error
+	if artistId := generateBy.ArtistId; artistId != 0 {
+		err = q.service.GenerateByArtist(artistId)
+	} else if trackId := generateBy.TrackId; trackId != 0 {
+		err = q.service.GenerateByTrack(trackId)
 	} else {
 		err = q.service.GenerateByAll()
 	}

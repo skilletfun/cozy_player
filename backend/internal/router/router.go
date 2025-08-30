@@ -45,7 +45,7 @@ func SetUpQueueRouter(r *gin.RouterGroup, c container.Container) {
 
 	r.GET("/queue/next", queueController.Next)
 	r.GET("/queue/prev", queueController.Prev)
-	r.GET("/queue", queueController.Generate)
+	r.POST("/queue", queueController.Generate)
 }
 
 func SetUpLibraryRouter(r *gin.RouterGroup, c container.Container) {

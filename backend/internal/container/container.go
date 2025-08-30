@@ -6,7 +6,8 @@ import (
 	"gorm.io/gorm"
 )
 
-// Container store data that sharing in overall application.
+// Container store data (app config, DB connection)
+// that sharing in overall application.
 type Container interface {
 	GetConfig() *config.Config
 	GetConnection() *gorm.DB

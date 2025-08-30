@@ -5,7 +5,6 @@ import (
 	"gcozy_player/internal/container"
 	"gcozy_player/internal/service"
 	"gcozy_player/pkg/response"
-	"strconv"
 
 	"github.com/gin-gonic/gin"
 )
@@ -17,6 +16,10 @@ type TrackController interface {
 	GetCover(c *gin.Context)
 }
 
+type TrackFilter struct {
+	ArtistId int
+}
+
 type trackController struct {
 	service service.TrackService
 }
@@ -26,28 +29,20 @@ func NewTrackController(c container.Container) TrackController {
 }
 
 // GetAll returns all tracks.
-// If artistId found in queryParams, GetAllByArtist will be called.
 func (t *trackController) GetAll(c *gin.Context) {
-	if artistId := c.Query("artistId"); artistId != "" {
-		t.GetAllByArtist(c)
-		return
-	}
+	filter := TrackFilter{}
+	c.BindQuery(&filter)
 
-	result, err := t.service.GetAll()
-	response.Response(c, result, err)
-}
-
-// GetAllByArtist returns all artist's tracks.
-func (t *trackController) GetAllByArtist(c *gin.Context) {
-	if artistId, err := strconv.Atoi(c.Query("artistId")); err != nil {
-		response.BadRequest(c, errors.New("invalid artistId"))
-	} else {
+	if artistId := filter.ArtistId; artistId != 0 {
 		result, err := t.service.GetAllByArtist(artistId)
+		response.Response(c, result, err)
+	} else {
+		result, err := t.service.GetAll()
 		response.Response(c, result, err)
 	}
 }
 
-// GetByID returns track (stream) by id.
+// GetByID returns track binary data (stream) by id.
 func (t *trackController) GetByID(c *gin.Context) {
 	if track, err := t.service.GetByID(c.GetInt("id")); err != nil {
 		response.BadRequest(c, err)
