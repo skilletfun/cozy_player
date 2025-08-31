@@ -17,8 +17,8 @@ type QueueController interface {
 }
 
 type GenerateQueueBy struct {
-	ArtistId int
-	TrackId  int
+	ArtistId int `json:"artistId"`
+	TrackId  int `json:"trackId"`
 }
 
 type queueController struct {
