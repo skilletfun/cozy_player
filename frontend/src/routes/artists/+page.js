@@ -1,5 +1,5 @@
 export const ssr = false;
-import { API } from "$lib/api.js";
+import { API } from "$lib/services/api.js";
 import { APP_DATA } from "$lib/shared.svelte.js";
 
 export async function load({ fetch, params }) {

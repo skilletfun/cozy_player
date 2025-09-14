@@ -7,8 +7,8 @@
 </div>
 
 <script>
-  import { API } from "$lib/api.js";
-  import { playArtist } from "$lib/player.js";
+  import { API } from "$lib/services/api.js";
+  import { playArtist } from "$lib/services/player.js";
   
   let { artist } = $props();
 </script>

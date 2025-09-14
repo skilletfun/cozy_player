@@ -1,5 +1,5 @@
 import { acts } from "@tadashi/svelte-notification";
-import { API } from "$lib/api.js";
+import { API } from "$lib/services/api.js";
 
 export async function Rescan() {
   try {

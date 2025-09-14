@@ -13,10 +13,10 @@
 </div>
 
 <script>
-  import { secondsToHumanString } from "$lib/utils.js";
-  import { API } from "$lib/api.js";
+  import { secondsToHumanString } from "$lib/services/utils.js";
+  import { API } from "$lib/services/api.js";
   import TrackList from "$lib/components/TrackList.svelte";
-  import { playArtist } from "$lib/player.js";
+  import { playArtist } from "$lib/services/player.js";
 
   let { data } = $props();
   let artistInfoHeader = `${data.artist.tracksCount} Tracks • ${secondsToHumanString(data.artist.duration)}`;

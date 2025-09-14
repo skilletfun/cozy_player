@@ -1,5 +1,5 @@
 :root {
-  font-family: system-ui, monospace;
+  font-family: monospace, system-ui;
   line-height: 1.5;
   font-weight: 400;
 
@@ -11,6 +11,11 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  --color-accent: chartreuse;
+
+  transition: 0.3s;
+  font-size: 12pt;
 }
 
 h1 {
@@ -18,37 +23,76 @@ h1 {
   line-height: 1.1;
 }
 
-h1, h2, h3, h4, h5, h6 {
-  font-family: monospace;
+div {
+  transition: 0.3s;
 }
 
-p {
-  font-family: monospace;
+.transparent {
+  background-color: transparent;
 }
 
 button {
+  transition: 0.3s;
   border-width: 0;
   font-family: monospace;
   cursor: pointer;
 }
 button:hover {
-  color: chartreuse;
+  color: var(--color-accent);
+}
+
+.hover:hover {
+  background-color: #3c3c3c;
+  cursor: pointer;
+}
+
+.flex {
+  display: flex;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+}
+
+.center {
+  justify-content: center;
+  align-items: center;
+  justify-self: center;
 }
 
 a {
-  font-family: monospace;
-  margin-top: 10px;
-  margin-bottom: 10px;
+  transition: 0.3s;
   text-decoration: none;
-  color: inherit;
+  color: whitesmoke;
+  text-align: center;
+  background-color: transparent;
+  cursor: pointer;
 }
 a:hover {
   cursor: pointer;
-  color: chartreuse !important;
+  color: var(--color-accent);
 }
 a:visited {
   text-decoration: none;
-  color: inherit;
+}
+a.active {
+  color: var(--color-accent);
+}
+
+.mt-1 {
+  margin-top: 10px;
+}
+
+.cover {
+  align-self: center;
+  object-fit: cover;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
 
 ::-webkit-scrollbar {

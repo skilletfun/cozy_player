@@ -1,5 +1,5 @@
-import { API } from "$lib/api.js";
-import { ENV, APP_DATA } from "$lib/shared.svelte.js";
+import { API } from "$lib/services/api.js";
+import { ENV, APP_DATA, STORE } from "$lib/shared.svelte.js";
 import { acts } from "@tadashi/svelte-notification";
 
 export function setupPlayer() {
@@ -56,7 +56,7 @@ export function play() {
 export function updateMediaSessionInfo() {
   try {
     const artistId = APP_DATA.currentTrack.artistId;
-    const artistName = APP_DATA.artists.find((e) => e.id == artistId).name;
+    const artistName = STORE.Artists.find((e) => e.id == artistId).name;
     document.title = `${APP_DATA.currentTrack.title} - ${artistName}`;
 
     navigator.mediaSession.metadata = new MediaMetadata({
@@ -192,9 +192,9 @@ export async function playMainQueue() {
 }
 
 async function loadArtists() {
-  if (Object.values(APP_DATA.artists).length == 0) {
+  if (Object.values(STORE.Artists).length == 0) {
     const response = await API.Artists.GetList();
     const data = await response.json();
-    APP_DATA.artists = data;
+    STORE.Artists = data;
   }
 }

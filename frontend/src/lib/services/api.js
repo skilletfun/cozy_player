@@ -1,10 +1,5 @@
-import { ENV } from "./shared.svelte";
-
-async function get(url, params) {
-  const urlParams = new URLSearchParams(params);
-  const strUrlParams = urlParams.toString() ? "?" + urlParams.toString() : "";
-  return await fetch(`${ENV.API_URL}${url}${strUrlParams}`);
-}
+import { ENV } from "$lib/shared.svelte";
+import { get, post } from "$lib/services/client";
 
 export const API = {
   Artists: {
@@ -14,7 +9,7 @@ export const API = {
     GetCoverURL: (id) => `${ENV.API_URL}/artist/cover/${id}`,
   },
   Library: {
-    Rescan: () => get(`/library/rescan`),
+    Rescan: () => post(`/library/rescan`),
   },
   Tracks: {
     GetList: (filters) => get(`/tracks`, filters),
@@ -22,9 +17,9 @@ export const API = {
     GetCoverURL: (id) => `${ENV.API_URL}/track/cover/${id}`,
   },
   Queue: {
-    Generate: () => get(`/queue`),
-    GenerateByArtist: (artistId) => get(`/queue?artistId=${artistId}`),
-    GenerateByTrack: (trackId) => get(`/queue?trackId=${trackId}`),
+    Generate: () => post(`/queue`, {}),
+    GenerateByArtist: (artistId) => post("/queue", {artistId: artistId}),
+    GenerateByTrack: (trackId) => post("/queue", {trackId: trackId}),
     Next: () => get(`/queue/next`),
     Prev: () => get(`/queue/prev`),
   },

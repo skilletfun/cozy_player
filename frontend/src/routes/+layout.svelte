@@ -11,11 +11,8 @@
 <script>
   import { onMount } from "svelte";
   import { Notifications, acts } from "@tadashi/svelte-notification";
-  import NavigationButton from "$lib/components/NavButton.svelte";
   import Header from "$lib/components/Header.svelte";
-  import { playMainQueue, setupPlayer } from "$lib/player.js";
-  import { API } from "$lib/api.js";
-  import { Rescan } from "$lib/library.js";
+  import { setupPlayer } from "$lib/services/player.js";
 
   let { children } = $props();
 

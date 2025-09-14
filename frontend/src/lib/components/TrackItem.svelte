@@ -8,7 +8,7 @@
 </div>
 
 <script>
-  import { playTrack } from "$lib/player.js";
+  import { playTrack } from "$lib/services/player.js";
   import { APP_DATA } from "$lib/shared.svelte.js";
 
   let { index, track } = $props();
