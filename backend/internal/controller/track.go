@@ -17,7 +17,7 @@ type TrackController interface {
 }
 
 type TrackFilter struct {
-	ArtistId int
+	ArtistId int `form:"artistId"`
 }
 
 type trackController struct {
