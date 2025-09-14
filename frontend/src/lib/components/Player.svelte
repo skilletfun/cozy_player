@@ -1,25 +1,27 @@
 <div class="column center">
   {#if APP_DATA.currentTrack && APP_DATA.currentTrack.id}
-    <img
-      class="cover"
-      src={API.Tracks.GetCoverURL(APP_DATA.currentTrack.id)}
-      alt="Cover"
-    />
-    <div class="player-info column center">
-      <p class="track-title">{APP_DATA.currentTrack.title}</p>
-      <a
-        class="track-group"
-        href="/artists/{APP_DATA.currentTrack.artistId}"
-      >
-        {getArtistName(APP_DATA.currentTrack.artistId)}
-      </a>
-      <div class="player-controls flex">
-        <PlayerButton icon="backward" onclick={previousTrack} />
-        <PlayerButton
-          icon={APP_DATA.isPlayingNow ? "pause" : "play"}
-          onclick={getFunction}
-        />
-        <PlayerButton icon="forward" onclick={nextTrack} />
+    <div class="row center">
+      <img
+        class="cover"
+        src={API.Tracks.GetCoverURL(APP_DATA.currentTrack.id)}
+        alt="Cover"
+      />
+      <div class="player-info column center">
+        <p class="track-title">{APP_DATA.currentTrack.title}</p>
+        <a
+          class="track-group"
+          href="/artists/{APP_DATA.currentTrack.artistId}"
+        >
+          {getArtistName(APP_DATA.currentTrack.artistId)}
+        </a>
+        <div class="player-controls flex">
+          <PlayerButton icon="backward" onclick={previousTrack} />
+          <PlayerButton
+            icon={APP_DATA.isPlayingNow ? "pause" : "play"}
+            onclick={getFunction}
+          />
+          <PlayerButton icon="forward" onclick={nextTrack} />
+        </div>
       </div>
     </div>
   {:else}

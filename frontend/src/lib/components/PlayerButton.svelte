@@ -1,5 +1,5 @@
-<button {onclick} aria-label="player control button" class="row-center">
-  <i class="row-center fas fa-{icon}"></i>
+<button {onclick} aria-label="player control button" class="row center transparent">
+  <i class="row center fas fa-{icon}"></i>
 </button>
 
 <script>
