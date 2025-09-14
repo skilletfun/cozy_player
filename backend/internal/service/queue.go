@@ -6,7 +6,6 @@ import (
 	"gcozy_player/internal/model"
 	"gcozy_player/pkg/structs"
 	"gcozy_player/pkg/utils"
-	"log"
 	"maps"
 	"slices"
 
@@ -58,7 +57,7 @@ func (q *queueService) GenerateNew() error {
 	if q.generationType == All {
 		return q.GenerateByAll()
 	} else if q.currentTrack == 0 {
-		return errors.New("Cannot generate specific queue without history")
+		return errors.New("cannot generate specific queue without history")
 	} else if track, _ := q.trackService.GetByID(int(q.currentTrack)); q.generationType == Artist {
 		return q.GenerateByArtist(int(track.ArtistID))
 	} else {
@@ -101,7 +100,6 @@ func (q *queueService) GenerateByTrack(artist int) error {
 
 // Generate is the method to generate new track's playing queue by provided tracks.
 func (q *queueService) Generate(tracks *[]model.Track) {
-	log.Println("Generate playing queue with ", len(*tracks), " tracks...")
 	q.queue.Clear()
 
 	utils.Shuffle(tracks)
@@ -114,8 +112,6 @@ func (q *queueService) Generate(tracks *[]model.Track) {
 			q.queue.Push(track)
 		}
 	}
-	log.Println("Generated queue: ")
-	q.queue.Print()
 }
 
 // SortTracksByPlayCount returns tracks sorted by play_count and artists.
@@ -194,7 +190,7 @@ func (q *queueService) Next() (uint, error) {
 		}
 	}
 	if q.queue.IsEmpty() {
-		return 0, errors.New("Queue empty after generation")
+		return 0, errors.New("queue empty after generation")
 	}
 	if q.currentTrack != 0 {
 		q.trackService.IncrementPlayCount(int(q.currentTrack))
@@ -209,7 +205,7 @@ func (q *queueService) Next() (uint, error) {
 // If no played tracks in history, return error.
 func (q *queueService) Prev() (uint, error) {
 	if q.currentTrack == 0 {
-		return 0, errors.New("Empty history, no previous track")
+		return 0, errors.New("empty history, no previous track")
 	}
 	if q.history.IsEmpty() {
 		return q.currentTrack, nil
