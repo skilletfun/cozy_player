@@ -10,9 +10,9 @@ import (
 
 func GetRouter(container container.Container) *gin.Engine {
 	defaultRouter := gin.Default()
-	router := defaultRouter.Group("/api")
+	defaultRouter.Use(middleware.CORS())
 
-	router.Use(middleware.CORS())
+	router := defaultRouter.Group("/api")
 	router.Use(middleware.ValidateID())
 
 	SetUpArtistRouter(router, container)
