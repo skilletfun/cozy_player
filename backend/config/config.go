@@ -13,9 +13,9 @@ func LoadConfig() *Config {
 		Database:    "/db/database.db",
 	}
 
-	if music_folder, exists := os.LookupEnv("MUSIC_FOLDER"); exists {
-		config.MusicFolder = music_folder
-	} 
+	if musicFolder, exists := os.LookupEnv("MUSIC_FOLDER"); exists {
+		config.MusicFolder = musicFolder
+	}
 
 	if database, exists := os.LookupEnv("DATABASE"); exists {
 		config.Database = database
