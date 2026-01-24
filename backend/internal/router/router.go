@@ -51,5 +51,5 @@ func SetUpQueueRouter(r *gin.RouterGroup, c container.Container) {
 func SetUpLibraryRouter(r *gin.RouterGroup, c container.Container) {
 	libraryController := controller.NewLibraryController(c)
 
-	r.GET("/library/rescan", libraryController.Rescan)
+	r.POST("/library/rescan", libraryController.Rescan)
 }
