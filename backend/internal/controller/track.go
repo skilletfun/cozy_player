@@ -51,7 +51,7 @@ func (t *trackController) GetByID(c *gin.Context) {
 	}
 }
 
-// GetByID returns track info by id.
+// GetInfoByID returns track info by id.
 func (t *trackController) GetInfoByID(c *gin.Context) {
 	track, err := t.service.GetByID(c.GetInt("id"))
 	response.Response(c, track, err)
