@@ -13,7 +13,7 @@ export const API = {
   },
   Tracks: {
     GetList: (filters) => get(`/tracks`, filters),
-    GetById: (id) => get(`/track/info${id}`),
+    GetById: (id) => get(`/track/info/${id}`),
     GetCoverURL: (id) => `${ENV.API_URL}/track/cover/${id}`,
   },
   Queue: {
