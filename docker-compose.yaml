@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  cozy-player:
+    build:
+      context: .
+      target: app
+    container_name: cozy-player
+    ports:
+      - "3000:80"
+    volumes:
+      - cozy-player-db:/db
+      - ${COZY_PLAYER_MUSIC_FOLDER}:/music
+    restart: unless-stopped
+
+volumes:
+  cozy-player-db:
