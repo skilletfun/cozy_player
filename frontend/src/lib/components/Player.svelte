@@ -25,7 +25,9 @@
       </div>
     </div>
   {:else}
-    <button class="btn play transparent hover flex center" onclick={playMainQueue}>Play</button>
+    <div style="scale: 2;">
+      <ActionButton title="Play" icon="play" onclick={playMainQueue} class="play"/>
+    </div>
   {/if}
 </div>
 
@@ -40,6 +42,7 @@
     resumePlaying,
   } from "$lib/services/player";
   import PlayerButton from "./PlayerButton.svelte";
+  import ActionButton from "./ActionButton.svelte";
 
   function getFunction() {
     return APP_DATA.isPlayingNow ? pausePlaying() : resumePlaying();
@@ -82,20 +85,5 @@
     height: 300px;
     width: 300px;
     margin-top: 15px;
-  }
-
-  .btn {
-    height: 80px;
-    font-size: 36px;
-    border-radius: 10px;
-    color: #e08b5d;
-    border-radius: 150px;
-    padding-right: 35px;
-    padding-left: 35px;
-  }
-  .btn.play::before {
-    margin-right: 15px;
-    scale: 1.25;
-    content: "▶";
   }
 </style>
