@@ -1,12 +1,10 @@
 <div class="artist-view">
-  <div class="artist-header flex">
+  <div class="artist-header flex mb-4">
     <img src={API.Artists.GetCoverURL(data.artist.id)} alt="cover" class="cover"/>
-    <div class="column">
-      <h1>{data.artist.name}</h1>
+    <div class="artist-info">
+      <h1 class="mt-0 mb-0">{data.artist.name}</h1>
       <h2>{artistInfoHeader}</h2>
-      <button class="play-btn" onclick={() => playArtist(data.artist)}>
-        <i class="fas fa-play"></i> Play
-      </button>
+      <ActionButton title="Play" icon="play" onclick={() => playArtist(data.artist)} class="play"/>
     </div>
   </div>
   <TrackList data={data.tracks} />
@@ -17,6 +15,7 @@
   import { API } from "$lib/services/api.js";
   import TrackList from "$lib/components/TrackList.svelte";
   import { playArtist } from "$lib/services/player.js";
+  import ActionButton from "$lib/components/ActionButton.svelte";
 
   let { data } = $props();
   let artistInfoHeader = `${data.artist.tracksCount} Tracks • ${secondsToHumanString(data.artist.duration)}`;
@@ -27,25 +26,18 @@
     align-self: center;
     margin-top: 50px;
   }
-  .artist-header {
-    margin-bottom: 40px;
-  }
-  .column {
+
+  .artist-info {
     justify-content: center;
+    display: flex;
+    flex-direction: column;
+    align-items: baseline;
   }
-  h1 {
-    margin-top: 0;
-    margin-bottom: 0;
-  }
+
   img {
     width: 200px;
     height: 200px;
     border-radius: 25px;
     margin-right: 30px;
-  }
-  .play-btn {
-    height: 35px;
-    width: 90px;
-    border-radius: 18px;
   }
 </style>

@@ -1,10 +1,10 @@
-<div class="hover">
+<a class="hover" href="/artists/{artist.id}">
   <img src={API.Artists.GetCoverURL(artist.id)} alt="cover" class="cover"/>
-  <button aria-label="play" class="play-btn" onclick={() => playArtist(artist)} >
-    <i class="fas fa-play"></i>
+  <button aria-label="play" class="play-btn row center" onclick={(e) => {e.preventDefault(); playArtist(artist);}}>
+    <i class="fas fa-play flex center"></i>
   </button>
-  <a href="/artists/{artist.id}">{artist.name}</a>
-</div>
+  <p>{artist.name}</p>
+</a>
 
 <script>
   import { API } from "$lib/services/api.js";
@@ -14,7 +14,7 @@
 </script>
 
 <style>
-  div {
+  a {
     width: 150px;
     height: 195px;
     background-color: transparent;
@@ -23,7 +23,6 @@
 
     display: flex;
     flex-direction: column;
-    flex-wrap: wrap;
     align-content: space-around;
   }
 
@@ -34,7 +33,7 @@
     margin-top: 15px;
   }
 
-  a {
+  p {
     text-align: center;
     margin-inline: 5px;
     margin-top: 10px;
@@ -49,7 +48,7 @@
     align-self: center;
     opacity: 0;
   }
-  div:hover > button.play-btn {
+  a:hover > button.play-btn {
     opacity: 1;
   }
   .play-btn:active {

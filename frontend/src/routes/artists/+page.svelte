@@ -1,4 +1,4 @@
-<div>
+<div class="mt-2">
   {#each data.artists as artist}
     <ArtistCard {artist} />
   {/each}

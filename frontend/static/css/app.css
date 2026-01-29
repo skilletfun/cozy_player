@@ -18,6 +18,10 @@
   font-size: 12pt;
 }
 
+body {
+  margin: 0;
+}
+
 h1 {
   font-size: 3.2em;
   line-height: 1.1;
@@ -66,6 +70,18 @@ button:hover {
   justify-self: center;
 }
 
+.navigation {
+  height: 55px;
+  background-color: #1b1b1b;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+i {
+  width: 32px;
+  height: 32px;
+  align-items: center;
+}
+
 a {
   transition: 0.3s;
   text-decoration: none;
@@ -85,8 +101,44 @@ a.active {
   color: var(--color-accent);
 }
 
+.mt-0 {
+  margin-top: 0;
+}
 .mt-1 {
   margin-top: 10px;
+}
+.mt-2 {
+  margin-top: 20px;
+}
+.mb-0 {
+  margin-bottom: 0;
+}
+.mb-4 {
+  margin-bottom: 40px;
+}
+
+.h-40 {
+  height: 40px;
+}
+
+.pr-15 {
+  padding-right: 15px;
+}
+.pl-15 {
+  padding-left: 15px;
+}
+.p-15 {
+  padding-right: 15px;
+  padding-left: 15px;
+}
+
+.br-20 {
+  border-radius: 20px;
+} 
+
+.rect-64 {
+  height: 64px;
+  width: 64px;
 }
 
 .cover {
