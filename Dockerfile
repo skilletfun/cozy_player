@@ -32,10 +32,6 @@ RUN bun run build
 #=======================================================
 FROM nginx:alpine AS app
 
-RUN apk update
-RUN apk upgrade
-RUN apk add --no-cache ffmpeg
-
 COPY --from=build-api /api/main /app/main
 
 COPY .nginx/nginx.conf /etc/nginx/conf.d/default.conf

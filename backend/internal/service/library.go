@@ -4,7 +4,7 @@ import (
 	"gcozy_player/config"
 	"gcozy_player/internal/container"
 	"gcozy_player/internal/model"
-	"gcozy_player/pkg/ffmpeg"
+	"gcozy_player/pkg/tags"
 	"gcozy_player/pkg/track"
 	"io/fs"
 	"log"
@@ -42,7 +42,7 @@ func NewLibraryService(c container.Container) LibraryService {
 // - create new artists with tracks;
 // - create new tracks;
 // - delete artists without tracks;
-// - delete tracks that no found while rescan. 
+// - delete tracks that no found while rescan.
 func (l *libraryService) Rescan() error {
 	artistsByNames := map[string]model.Artist{}
 	artistTracks := map[uint]map[string]*model.Track{}
@@ -65,7 +65,7 @@ func (l *libraryService) Rescan() error {
 			artistTracks[track.ArtistID][track.Path] = &track
 		}
 	}
-	
+
 	if artists, err := l.ActualizeArtists(artistsByNames); err != nil {
 		return err
 	} else {
@@ -73,10 +73,10 @@ func (l *libraryService) Rescan() error {
 		var tcm sync.Mutex
 		var tdm sync.Mutex
 		var atm sync.Mutex
-		
+
 		tracksForCreate := []model.Track{}
 		tracksForDelete := []model.Track{}
-		
+
 		for _, artist := range artists {
 			wg.Add(1)
 			go func() {
@@ -87,12 +87,12 @@ func (l *libraryService) Rescan() error {
 					artistTracks[artist.ID] = map[string]*model.Track{}
 					atm.Unlock()
 				}
-				
+
 				newTracks := l.CollectNewTracks(artist, artistTracks[artist.ID])
 				tcm.Lock()
 				tracksForCreate = append(tracksForCreate, *newTracks...)
 				tcm.Unlock()
-				
+
 				for _, v := range artistTracks[artist.ID] {
 					tdm.Lock()
 					tracksForDelete = append(tracksForDelete, *v)
@@ -101,14 +101,14 @@ func (l *libraryService) Rescan() error {
 			}()
 		}
 		wg.Wait()
-		
+
 		// Create new tracks
 		if len(tracksForCreate) > 0 {
 			if err := l.trackService.BulkCreate(&tracksForCreate); err != nil {
 				return err
 			}
 		}
-		
+
 		// Delete tracks that not found
 		if len(tracksForDelete) > 0 {
 			if err := l.trackService.BulkDelete(&tracksForDelete); err != nil {
@@ -116,7 +116,7 @@ func (l *libraryService) Rescan() error {
 			}
 		}
 	}
-	
+
 	return l.artistService.DeleteWithoutTracks()
 }
 
@@ -124,7 +124,7 @@ func (l *libraryService) ActualizeArtists(artistsByNames map[string]model.Artist
 	entries, _ := os.ReadDir(l.conf.MusicFolder)
 	newArtists := []model.Artist{}
 	existedArtists := map[string]model.Artist{}
-	
+
 	for _, entry := range entries {
 		if !entry.IsDir() {
 			continue
@@ -139,18 +139,18 @@ func (l *libraryService) ActualizeArtists(artistsByNames map[string]model.Artist
 			delete(artistsByNames, entry.Name())
 		}
 	}
-	
+
 	if len(newArtists) > 0 {
 		log.Println("Found new artist for create: ", len(newArtists))
 		if err := l.artistService.BulkCreate(&newArtists); err != nil {
 			return nil, err
 		}
 	}
-	 
+
 	for _, artist := range newArtists {
 		existedArtists[artist.Name] = artist
 	}
-	
+
 	artistsForDelete := slices.Collect(maps.Values(artistsByNames))
 	if len(artistsForDelete) > 0 {
 		log.Println("Found artist for delete: ", len(artistsForDelete))
@@ -158,16 +158,16 @@ func (l *libraryService) ActualizeArtists(artistsByNames map[string]model.Artist
 			return nil, err
 		}
 	}
-	
+
 	if err := l.artistService.UpdateCovers(); err != nil {
 		return nil, err
 	}
-	
+
 	return existedArtists, nil
 }
 
 // CollectNewTracks returns paths to new tracks.
-// Takes path to walk and map with current tracks in library. collect all new tracks. 
+// Takes path to walk and map with current tracks in library. collect all new tracks.
 // While walk:
 // 1) check file is track file, skip if doesn't;
 // 2) if track file in library, remove it from tracks to prevent being deleted;
@@ -175,7 +175,7 @@ func (l *libraryService) ActualizeArtists(artistsByNames map[string]model.Artist
 func (l *libraryService) CollectNewTracks(artist model.Artist, tracks map[string]*model.Track) *[]model.Track {
 	walkPath := l.conf.MusicFolder + "/" + artist.Name
 	log.Println("Scan artist directory: ", walkPath)
-	
+
 	var newTrackPaths []string
 	filepath.WalkDir(
 		walkPath,
@@ -191,7 +191,7 @@ func (l *libraryService) CollectNewTracks(artist model.Artist, tracks map[string
 		},
 	)
 	log.Println("Found ", len(newTrackPaths), "tracks in artist: ", walkPath)
-	
+
 	var newTracks []model.Track
 
 	m := sync.Mutex{}
@@ -201,14 +201,14 @@ func (l *libraryService) CollectNewTracks(artist model.Artist, tracks map[string
 		wg.Add(1)
 		go func(path string) {
 			defer wg.Done()
-			info, err := ffmpeg.GetFileInfo(trackPath)
+			info, err := tags.GetTags(trackPath)
 			if err != nil {
-				log.Println("Error ffmpeg.GetFileInfo(trackPath): ", err.Error())
+				log.Println("Error tags.GetTags(trackPath): ", err.Error())
 				return
 			}
 			newTrack := model.Track{
-				Title:    info.Tags.Title,
-				Album:    info.Tags.Album,
+				Title:    info.Title,
+				Album:    info.Album,
 				Duration: uint16(info.Duration),
 				Path:     trackPath,
 				ArtistID: artist.ID,
@@ -220,6 +220,6 @@ func (l *libraryService) CollectNewTracks(artist model.Artist, tracks map[string
 		}(trackPath)
 	}
 	wg.Wait()
-	
+
 	return &newTracks
 }

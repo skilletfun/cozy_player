@@ -4,7 +4,7 @@ import (
 	"gcozy_player/config"
 	"gcozy_player/internal/container"
 	"gcozy_player/internal/model"
-	"gcozy_player/pkg/ffmpeg"
+	"gcozy_player/pkg/cover"
 	"os"
 	"strings"
 
@@ -70,7 +70,7 @@ func (t *trackService) IncrementPlayCount(id int) error {
 func (t *trackService) GetCover(id int) (string, []byte) {
 	if track, err := t.GetByID(id); err != nil {
 		return "", nil
-	} else if picture, _ := ffmpeg.GetCover(track.Path); len(picture) > 0 {
+	} else if picture, _ := cover.GetCover(track.Path); len(picture) > 0 {
 		return "image/jpeg", picture
 	} else {
 		return t.GetCoverFromArtist(track)
