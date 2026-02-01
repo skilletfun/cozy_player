@@ -80,7 +80,7 @@ func (a *artistService) UpdateCovers() error {
 			return err
 		}
 	}
-		
+
 	return nil
 }
 
