@@ -3,6 +3,7 @@ FROM golang:1.24-alpine as build-api
 
 ENV GOOS linux
 ENV CGO_ENABLED 0
+ENV GIN_MODE release
 
 WORKDIR /api
 
