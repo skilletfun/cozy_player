@@ -3,7 +3,6 @@ FROM golang:1.24-alpine as build-api
 
 ENV GOOS linux
 ENV CGO_ENABLED 0
-ENV GIN_MODE release
 
 WORKDIR /api
 
@@ -32,6 +31,8 @@ RUN bun run build
 
 #=======================================================
 FROM nginx:alpine AS app
+
+ENV GIN_MODE release
 
 COPY --from=build-api /api/main /app/main
 
