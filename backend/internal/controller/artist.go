@@ -42,6 +42,6 @@ func (a *artistController) GetCover(c *gin.Context) {
 	} else if artist.Cover == "" {
 		response.NotFound(c, errors.New("cover no found"))
 	} else {
-		response.File(c, artist.Cover)
+		response.CachedFile(c, artist.Cover)
 	}
 }

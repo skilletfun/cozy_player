@@ -48,6 +48,11 @@ func File(c *gin.Context, file string) {
 	c.File(file)
 }
 
+func CachedFile(c *gin.Context, file string) {
+	c.Header("Cache-Control", "public, max-age=31536000")
+	c.File(file)
+}
+
 func Data(c *gin.Context, mimeType string, data []byte) {
 	c.Data(200, mimeType, data)
 }

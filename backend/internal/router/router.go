@@ -5,6 +5,7 @@ import (
 	"gcozy_player/internal/controller"
 	"gcozy_player/internal/middleware"
 
+	"github.com/gin-contrib/gzip"
 	"github.com/gin-gonic/gin"
 )
 
@@ -14,6 +15,7 @@ func GetRouter(container container.Container) *gin.Engine {
 
 	router := defaultRouter.Group("/api")
 	router.Use(middleware.ValidateID())
+	router.Use(gzip.Gzip(gzip.DefaultCompression))
 
 	SetUpArtistRouter(router, container)
 	SetUpTrackRouter(router, container)
