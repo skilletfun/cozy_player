@@ -14,7 +14,11 @@ tasks:
     cmds:
       - bun dev
     silent: true
-
+  
+  build:
+    cmds:
+      - podman build -t cozy-player .
+  
   default:
     deps: [backend, frontend]
     silent: true
