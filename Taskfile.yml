@@ -1,24 +1,28 @@
 # https://taskfile.dev
 
-version: '3'
+version: "3"
 
 tasks:
   backend:
-    dir: '{{.USER_WORKING_DIR}}/backend'
+    dir: "{{.USER_WORKING_DIR}}/backend"
     cmds:
       - go run cmd/main/main.go
     silent: true
-  
+
   frontend:
-    dir: '{{.USER_WORKING_DIR}}/frontend'
+    dir: "{{.USER_WORKING_DIR}}/frontend"
     cmds:
       - bun dev
     silent: true
-  
+
   build:
     cmds:
       - podman build -t cozy-player .
-  
+
+  push:
+    cmds:
+      - podman push cozy-player docker://docker.io/skilletfun/cozy-player
+
   default:
     deps: [backend, frontend]
     silent: true
