@@ -18,7 +18,11 @@ tasks:
   build:
     cmds:
       - podman build -t cozy-player .
-
+  
+  login:
+    cmds:
+      - podman login -u $DOCKER_LOGIN -p $DOCKER_PASSWORD
+  
   push:
     cmds:
       - podman push cozy-player docker://docker.io/skilletfun/cozy-player
