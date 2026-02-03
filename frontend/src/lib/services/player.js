@@ -35,6 +35,16 @@ export function setupPlayer() {
   }
 }
 
+export function removeHandlers() {
+  if (!("mediaSession" in navigator)) return;
+
+  navigator.mediaSession.setActionHandler("play", null);
+  navigator.mediaSession.setActionHandler("pause", null);
+  navigator.mediaSession.setActionHandler("previoustrack", null);
+  navigator.mediaSession.setActionHandler("nexttrack", null);
+  navigator.mediaSession.setActionHandler("seekto", null);
+}
+
 export function play() {
   try {
     let player = document.getElementById("player");
